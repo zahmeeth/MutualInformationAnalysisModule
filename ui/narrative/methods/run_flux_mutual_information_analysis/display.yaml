@@ -1,0 +1,35 @@
+name     : Run Flux Mutual Information Analysis
+subtitle : none
+tooltip  : Explore the mutual information between model flux and media inputs
+
+screenshots :
+    []
+
+method-suggestions :
+    related :
+        []
+    next :
+        []
+
+parameters :
+    fbamodel_id :
+        ui-name : FBA model
+        short-hint : Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
+        long-hint  : Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
+
+    media_id :
+        ui-name : Base media
+        short-hint : Select a base media to which all selected compound combinations will be added
+        long-hint  : Select a base media to which all selected compound combinations will be added
+
+    compounds :
+        ui-name : Compounds to analyze
+        short-hint : Select the list of compounds to compute mutual information analysis with model flux
+        long-hint  : Select the list of compounds to compute mutual information analysis with model flux
+
+description : none
+
+description : |
+    <p>Zahmeeth will write a better description later, with links to her publications</p>
+    
+technical-description : none

@@ -1,0 +1,15 @@
+module-name:
+    MutualInformationAnalysisModule
+
+module-description:
+    A KBase module
+
+service-language:
+    python
+
+module-version:
+    1.0.0
+
+owners:
+    [zahmeeth]
+
