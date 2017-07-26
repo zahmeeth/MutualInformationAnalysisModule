@@ -73,7 +73,7 @@
   "behavior" : {
      "service-mapping": {
             "url": "",
-            "name": "ZS_MutualInfo",
+            "name": "MutualInformationAnalysisModule",
             "method": "run_flux_mutual_information_analysis",
      "input_mapping": [
               {

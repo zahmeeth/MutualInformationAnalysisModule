@@ -22,7 +22,10 @@ RUN pip install cffi --upgrade \
     && pip install 'requests[security]' --upgrade
 
 # -----------------------------------------
+RUN pip install natsort \
+    && pip install pandas
 
+RUN pip install matplotlib
 COPY ./ /kb/module
 RUN mkdir -p /kb/module/work
 RUN chmod -R a+rw /kb/module
