@@ -88,27 +88,18 @@ class MutualInfoUtil:
 
         output_directory = os.path.join(self.scratch, str(uuid.uuid4()))
         self._mkdir_p(output_directory)
-        result_file_path = os.path.join(output_directory, 'report.html')
-
+        result_file_path = os.path.join(output_directory, 'mutual_information_report.html')
         
         shutil.copy(os.path.join(result_directory, 'MI_plot.png'),
-                     os.path.join(output_directory, 'MutualInfo_plots.png'))
+                    os.path.join(output_directory, 'MutualInfo_plots.png'))
         
         overview_content = ''
-        """overview_content += '<br/><table><tr><th>Mutual Information for various chemical compound combination'
-        overview_content += ' Object</th></tr>'
-        overview_content += '<tr><td>{} ({})'.format(params.get('diff_expression_obj_name'),
-                                                     diff_expression_obj_ref)
-        overview_content += '</td></tr></table>'
-
-        overview_content += '<p><br/></p>'"""
-
         overview_content += '<table><tr><th>Mutual Information for various chemical compound combinations'
         overview_content += ' Object</th></td>'
         overview_content += '<tr><th>Input Chemical Compound Combination</th>'
         overview_content += '<th>Mutual Information (in Bits)</th>'
         overview_content += '</tr>'
-        for k,v in mutual_info_dict.items():
+        for k, v in mutual_info_dict.items():
             overview_content += '<tr><td>{}</td><td>{}</td></tr>'.format(k, v)
         overview_content += '</table>'
 
@@ -119,6 +110,11 @@ class MutualInfoUtil:
                 report_template = report_template.replace('<p>Overview_Content</p>',
                                                           overview_content)
                 result_file.write(report_template)
+
+        html_report.append({'path': result_file_path,
+                            'name': os.path.basename(result_file_path),
+                            'label': os.path.basename(result_file_path),
+                            'description': 'HTML summary report for Mutual Information App'})
         
         return html_report
 
@@ -171,22 +167,10 @@ class MutualInfoUtil:
         """
 
         log('creating report')
-
-        #output_files = self._generate_output_file_list(result_directory)
-
         output_html_files = self._generate_html_report(result_directory,
                                                        mutual_info_dict)
-
-
-        description_set = 'AAAAAA'
-        description_object = 'XXXXXXXXXX'
         report_params = {'message': '',
                          'workspace_name': params.get('workspace_name'),
-                         """objects_created': [{'ref': diff_expression_obj_ref,
-                                              'description': description_set},
-                                             {'ref': diff_expr_ref,
-                                              'description': description_object}],"""
-                        # 'file_links': output_files,
                          'html_links': output_html_files,
                          'direct_html_link_index': 0,
                          'html_window_height': 333,
