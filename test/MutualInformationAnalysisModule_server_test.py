@@ -86,5 +86,5 @@ class MutualInformationAnalysisModuleTest(unittest.TestCase):
         #
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
-        params = {'fbamodel_id': "meh", 'compound_id': "foo",'media_id': "bar", 'workspace_name': 'zahmeeth:narrative_1496764271337'}
+        params = {'fbamodel_id': "meh", 'compounds': "foo",'media_id': "bar", 'workspace_name': self.getWsName()}
         self.getImpl().run_flux_mutual_information_analysis(self.getContext(), params)

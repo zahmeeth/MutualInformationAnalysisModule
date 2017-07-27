@@ -61,7 +61,7 @@ class MutualInfoUtil:
         log('start validating validate_run_flux_mutual_information_analysis params')
 
         # check for required parameters
-        for p in ['fbamodel_id', 'compound_id','media_id', 'workspace_name']:
+        for p in ['fbamodel_id', 'compounds','media_id', 'workspace_name']:
             if p not in params:
                 raise ValueError('"{}" parameter is required, but missing'.format(p))
     
