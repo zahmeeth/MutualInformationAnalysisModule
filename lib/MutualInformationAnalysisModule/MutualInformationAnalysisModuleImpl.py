@@ -65,7 +65,7 @@ class MutualInformationAnalysisModule:
         fbamodel_id = params.get('fbamodel_id')
         compounds = params.get('compounds')
         media_id = params.get('media_id')
-        workspace_name = params.get('workspaces')
+        workspace_name = params.get('workspace_name')
 
         #compounds_file = MutualInfoUtil._get_file_from_ws(compounds)
         #fba_file = MutualInfoUtil._get_file_from_ws(fba_object_ref)
