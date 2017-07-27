@@ -91,7 +91,7 @@ class MutualInfoUtil:
         result_file_path = os.path.join(output_directory, 'mutual_information_report.html')
         
         shutil.copy(os.path.join(result_directory, 'MI_plot.png'),
-                    os.path.join(output_directory, 'MutualInfo_plots.png'))
+                    os.path.join(output_directory, 'MI_plot.png'))
         
         overview_content = ''
         overview_content += '<table><tr><th>Mutual Information for various chemical compound combinations'
@@ -227,7 +227,7 @@ class MutualInfoUtil:
         # 2.1 Creating a disctionary for all FBAs except m0
         print len(Temp1_df2)
         mydict = {}
-        for x in range(0,len(Temp1_df2)):
+        for x in range(0, len(Temp1_df2)):
             for i in range(1,s_df2[1]):
                 currentvalue = Temp1_df2.iloc[x,i]
                 currentid = Temp1_df2.iloc[x,0]
@@ -283,7 +283,7 @@ class MutualInfoUtil:
         #To print an item from the All_Comp_Combi_dic
         df = (pd.DataFrame(All_Comp_Combi_dic.items()))
 
-        print df[0]
+        #print df[0]
         #print df[1][7]
 
         MI_dict = {}
@@ -315,32 +315,32 @@ class MutualInfoUtil:
                 # print values
                 d = {x:values.count(x) for x in values}     
 
-        #-------Mutual Inforamtion (MI) calculation-------------
-        FBAs = len(df[1][k].columns)
-        pure_entropy = math.log(FBAs,2)
-        #print pure_entropy
+                #-------Mutual Inforamtion (MI) calculation-------------
+                FBAs = len(df[1][k].columns)
+                pure_entropy = math.log(FBAs,2)
+                #print pure_entropy
 
 
-        # If No duplicates exist and list "value" is empty
-        if not values:
-            #print("List is empty")
-            No_duplicate_FBAs = len(drop_columns_df.columns)
-            conditional_entropy = -1 * (No_duplicate_FBAs*((1/No_duplicate_FBAs)*((1/1)*math.log(1.0/1.0,2))));
-            Mutual_Info = pure_entropy - conditional_entropy
-            #print('Mutaul Info:', Mutual_Info)
+                # If No duplicates exist and list "value" is empty
+                if not values:
+                    #print("List is empty")
+                    No_duplicate_FBAs = len(drop_columns_df.columns)
+                    conditional_entropy = -1 * (No_duplicate_FBAs*((1/No_duplicate_FBAs)*((1/1)*math.log(1.0/1.0,2))));
+                    Mutual_Info = pure_entropy - conditional_entropy
+                    #print('Mutaul Info:', Mutual_Info)
 
-        if values:
-        # If duplicates exist and list "value" is not empty
-            conditional_entropy = 0
-            for key in d:
-                #print key, d[key]
-                Temp = -1 * d[key] * (key/float(FBAs)) * key * (1.0/key) * math.log(1.0/key,2)
-                conditional_entropy = Temp + conditional_entropy
-            #print "%3f" %Temp
-            Mutual_Info = pure_entropy - conditional_entropy
-            #print('Mutaul Info:', Mutual_Info)
+                if values:
+                # If duplicates exist and list "value" is not empty
+                    conditional_entropy = 0
+                    for key in d:
+                        #print key, d[key]
+                        Temp = -1 * d[key] * (key/float(FBAs)) * key * (1.0/key) * math.log(1.0/key,2)
+                        conditional_entropy = Temp + conditional_entropy
+                    #print "%3f" %Temp
+                    Mutual_Info = pure_entropy - conditional_entropy
+                    #print('Mutaul Info:', Mutual_Info)
 
-        MI_dict.update({df[0][k] : Mutual_Info})
+                MI_dict[df[0][k]] = Mutual_Info
 
         #Sorted MI_dict
         MI_dict = sorted(MI_dict.items(), key=lambda x: (len(x[0]),x[1]), reverse=True)
@@ -353,8 +353,6 @@ class MutualInfoUtil:
         plt.ylabel('Mutual Information (in Bits)')
         plt.title("Organism:XYZ")
         fig1 = plt.gcf()
-        #plt.show()
-        #plt.draw()
         fig1.savefig(os.path.join(self.scratch, 'MI_plot.png'), dpi=100)  
 
         return MI_dict
