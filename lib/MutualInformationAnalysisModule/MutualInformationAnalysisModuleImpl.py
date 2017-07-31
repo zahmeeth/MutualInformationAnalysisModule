@@ -67,13 +67,17 @@ class MutualInformationAnalysisModule:
         media_id = params.get('media_id')
         workspace_name = params.get('workspace_name')
 
-        #compounds_file = MutualInfoUtil._get_file_from_ws(compounds)
         #fba_file = MutualInfoUtil._get_file_from_ws(fba_object_ref)
+        print('Making Media Objects')
+        media_id_list, media_matrix = MI_runner._make_media_files(workspace_name, media_id, compounds)
+        # PATCH
         fba_file = '/kb/module/data/BT_7bits.csv'
-        compounds_file = '/kb/module/data/AllFBAs_7.csv'
-        mutual_info = MI_runner._generate_mutual_info(compounds_file, fba_file)
-        print('YAY!')
-        output = MI_runner._generate_report(self.scratch, mutual_info, params)    
+        import pandas as pd
+        media_matrix = pd.read_csv('/kb/module/data/AllFBAs_7.csv')
+        media_matrix.as_matrix()
+        # END PATCH
+        mutual_info = MI_runner._generate_mutual_info(media_matrix, fba_file)
+        output = MI_runner._generate_report(self.scratch, mutual_info, params)
         
         #END run_flux_mutual_information_analysis
 

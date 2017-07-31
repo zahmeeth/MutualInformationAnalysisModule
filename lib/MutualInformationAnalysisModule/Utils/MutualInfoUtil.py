@@ -1,9 +1,7 @@
 import time
-import json
 import os
 import errno
 import uuid
-import csv
 import math
 import pandas as pd
 import numpy as np
@@ -11,13 +9,12 @@ import collections
 import natsort
 import shutil
 import itertools
-import operator
-from itertools import islice
+from itertools import combinations
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from itertools import groupby
+from copy import deepcopy
 
 from Workspace.WorkspaceClient import Workspace as Workspace
 from DataFileUtil.DataFileUtilClient import DataFileUtil
@@ -64,18 +61,56 @@ class MutualInfoUtil:
         for p in ['fbamodel_id', 'compounds', 'media_id', 'workspace_name']:
             if p not in params:
                 raise ValueError('"{}" parameter is required, but missing'.format(p))
-    
 
-    def _get_file_from_ws(workspace, obj_name):
+    def _get_file_from_ws(self, workspace, obj_name):
         try:
-            file_path = ws_client.get_objects(
+            file_path = self.ws.get_objects(
                 [{'name': obj_name,
                   'workspace': workspace}])[0]
         except Exception as e:
             raise ValueError(
                 'Unable to get object from workspace: (' +
                 workspace + '/' + obj_name + ')' + str(e))
-        return file_path       
+        return file_path
+
+    def _make_media_files(self, ws_name, base, compounds):
+        """
+        Build and store media objects for each combination of compound added to the base media.
+        :param base: The base media file
+        :param compounds: the set of compound to test
+        :return: A list of media ids and a matrix with each media combination defined
+        """
+        base_media = self._get_file_from_ws(ws_name, base)['data']
+
+        media_ids = [base_media['id']]
+        new_media_list = []
+        media_matrix = [[""]+compounds]
+        media_matrix.append([base_media['id']+[0]*len(compounds)])
+        for n_comp in range(1, len(compounds)+1):
+            for combo in combinations(compounds, n_comp):
+                new_media_id = base_media['id'] + '_v%s' % len(media_matrix)
+                media_ids.append(new_media_id)
+                media_matrix.append([new_media_id]+[1 if comp in combo else 0 for comp in compounds])
+                new_media = deepcopy(base_media)
+                new_media['id'] = new_media_id
+                new_media['name'] = new_media_id
+                for new_comp in combo:
+                    new_media['mediacompounds'].append(
+                        {'compound_ref': '48/1/1/compounds/id/%s' % new_comp.split('_')[0],
+                         'concentration': 1.0, 'maxFlux': 1000, 'minFlux': -1000})
+                new_media_list.append(new_media)
+
+        print("Made %s Media Files" % len(media_ids)-1)
+        info = self.ws.save_objects(
+            {'workspace': ws_name,
+             "objects": [{
+                 "type": "KBaseBiochem.Media",
+                 "data": media,
+                 "name": media['name']
+             } for media in new_media_list]
+             })
+        print info
+        return media_ids, media_matrix
 
     def _generate_html_report(self, result_directory, mutual_info_dict):
         
@@ -143,15 +178,13 @@ class MutualInfoUtil:
 
         return report_output       
 
-    def _generate_mutual_info(self, compounds_file, fba_file):
+    def _generate_mutual_info(self, media_matrix, fba_file):
 
         df1 = pd.read_csv(fba_file)
         df1.as_matrix()
 
-        df2 = pd.read_csv(compounds_file)
-        df2.as_matrix()
 
-        #----Input validation of Media/FBAs with Binary Matrix FBAs------
+       #----Input validation of Media/FBAs with Binary Matrix FBAs------
         # 1.0 Number of rows in Media.csv file =  (Number of columns -1)
         #   1.0. If they are different: Through an ERROR saying missed match number of FBAs in media and binary matrix. 
         # 1.1 Check whether the elements in Media.csv file contains only binary values (i.e. 0 and 1)
@@ -160,10 +193,10 @@ class MutualInfoUtil:
         #   1.2. If the compounds are different from number of FBAs: Through an ERROR saying not appropriate input values
 
         s_df1 = df1.shape
-        s_df2 = df2.shape
+        s_df2 = media_matrix.shape
 
 
-        Temp_df2 = np.array(df2.values)
+        Temp_df2 = np.array(media_matrix.values)
         # Create matrix with only the elements remove first column and all the rows
         Temp_df2 = Temp_df2[0:,1:]
 
@@ -176,7 +209,7 @@ class MutualInfoUtil:
         #-----All possible combination of the chemical compounds----------------------
         # 2.0 Sperating m0 from rest of the lables
 
-        Temp1_df2 = df2
+        Temp1_df2 = media_matrix
 
         cols = Temp1_df2.columns
         for i in range(1,len(cols)):
