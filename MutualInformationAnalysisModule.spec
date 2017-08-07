@@ -36,4 +36,7 @@ module MutualInformationAnalysisModule {
     } RunFluxMutualInformationAnalysisResults;
     
     funcdef run_flux_mutual_information_analysis(RunFluxMutualInformationAnalysisParams params) returns (RunFluxMutualInformationAnalysisResults output) authentication required;
+    
+    funcdef run_biomass_mutual_information_analysis(RunFluxMutualInformationAnalysisParams params) returns (RunFluxMutualInformationAnalysisResults output) authentication required;
+		
 };
