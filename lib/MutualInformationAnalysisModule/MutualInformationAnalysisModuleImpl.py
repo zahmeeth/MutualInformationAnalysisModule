@@ -57,13 +57,14 @@ class MutualInformationAnalysisModule:
         """
         # ctx is the context object
         # return variables are: output
-        #BEGIN run_flux_mutual_information_analysis
+        # BEGIN run_flux_mutual_information_analysis
         print('Starting flux mutual information analysis method.')
 
         MI_runner = MutualInfoUtil(self.config)
         MI_runner._validate_run_flux_mutual_information_analysis_params(params)
         fbamodel_id = params.get('fbamodel_id')
-        compounds = params.get('compounds')
+        # compounds is a string delimited by ','
+        compounds = params.get('compounds').split(',')
         media_id = params.get('media_id')
         workspace_name = params.get('workspace_name')
 
