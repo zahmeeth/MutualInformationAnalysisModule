@@ -1,2 +1,5 @@
+#ignore pycharm configs
+.idea
+
 test_local
 sdk.cfg
