@@ -70,15 +70,22 @@ class MutualInformationAnalysisModule:
         #fba_file = MutualInfoUtil._get_file_from_ws(fba_object_ref)
         print('Making Media Objects')
         media_id_list, media_matrix = MI_runner._make_media_files(workspace_name, media_id, compounds)
-        # PATCH
-        fba_file = '/kb/module/data/BT_7bits.csv'
+        #Loading media matrix - which is shared by all three modes of the function
         import pandas as pd
         media_matrix = pd.read_csv('/kb/module/data/AllFBAs_7.csv')
         media_matrix.as_matrix()
-        # END PATCH
-        mutual_info = MI_runner._generate_mutual_info(media_matrix, fba_file)
+        #Loading fluxes when running in flux mode
+        data_file = "";
+        if params['mi_options'] == "flux":
+            data_file = '/kb/module/data/BT_7bits.csv'
+        elif params['mi_options'] == "biomass":
+            data_file = '/kb/module/data/biomass.csv'
+        elif params['mi_options'] == "secretion":
+            data_file = '/kb/module/data/secretion.csv'
+        #Running core mutual information function
+        mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file,params['mi_options'])
+        #Writing output report
         output = MI_runner._generate_report(self.scratch, mutual_info, params)
-        
         #END run_flux_mutual_information_analysis
 
         # At some point might do deeper type checking...

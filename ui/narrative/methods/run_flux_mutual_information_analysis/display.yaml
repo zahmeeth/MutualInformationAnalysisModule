@@ -26,6 +26,11 @@ parameters :
         ui-name : Compounds to analyze
         short-hint : Select the list of compounds to compute mutual information analysis with model flux
         long-hint  : Select the list of compounds to compute mutual information analysis with model flux
+        
+    mi_options :
+        ui-name : Mode of operation
+        short-hint : Select which model outputs to compute mutual information from: intecular flux values; biomass production; or section, uptake, and biomass production
+        long-hint  : Select which model outputs to compute mutual information from: intecular flux values; biomass production; or section, uptake, and biomass production
 
 description : none
 
