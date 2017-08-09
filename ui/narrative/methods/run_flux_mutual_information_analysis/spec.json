@@ -37,7 +37,7 @@
            "optional" : false,
            "allow_multiple" : false,
            "field_type" : "text"
-            },
+        },
         {
             "allow_multiple" : false,
             "optional" : false,
@@ -68,7 +68,42 @@
                 },
                 "multiselection" : true
             }
-        }
+        },
+        {
+         "optional" : true,
+         "allow_multiple" : false,
+         "field_type" : "dropdown",
+         "dropdown_options" : {
+            "options" : [
+               {
+                  "id" : "flux",
+                  "display" : "Intracellular fluxes",
+                  "ui_name" : "Intracellular fluxes",
+                  "value" : "flux"
+               },
+               {
+                  "value" : "biomass",
+                  "ui_name" : "Biomass flux",
+                  "display" : "Biomass flux",
+                  "id" : "biomass"
+               },
+               {
+                  "id" : "secretion",
+                  "value" : "secretion",
+                  "ui_name" : "Uptake, biomass and secretion",
+                  "display" : "Uptake, biomass and secretion"
+               }
+            ]
+         },
+         "id" : "mi_options",
+         "advanced" : false,
+         "default_values" : [
+            "flux"
+         ],
+         "text_options" : {
+            "valid_ws_types" : []
+         }
+      }
     ],
   "behavior" : {
      "service-mapping": {
@@ -80,9 +115,13 @@
                   "input_parameter": "fbamodel_id",
                   "target_property": "fbamodel_id"
               },
-                  {
+              {
                   "input_parameter": "media_id",
                   "target_property": "media_id"
+              },
+              {
+                  "input_parameter": "mi_options",
+                  "target_property": "mi_options"
               },
               {
                   "input_parameter": "compounds",
