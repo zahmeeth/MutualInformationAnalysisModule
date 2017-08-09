@@ -7,11 +7,12 @@ import pandas as pd
 import numpy as np
 import collections
 import natsort
+import uuid
 import shutil
 import itertools
+import json
 from itertools import combinations
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 from copy import deepcopy
@@ -85,7 +86,7 @@ class MutualInfoUtil:
         media_ids = [base_media['id']]
         new_media_list = []
         media_matrix = [[""]+compounds]
-        media_matrix.append([base_media['id']+[0]*len(compounds)])
+        media_matrix.append([[base_media['id']]+[0]*len(compounds)])
         for n_comp in range(1, len(compounds)+1):
             for combo in combinations(compounds, n_comp):
                 new_media_id = base_media['id'] + '_v%s' % len(media_matrix)
@@ -100,7 +101,7 @@ class MutualInfoUtil:
                          'concentration': 1.0, 'maxFlux': 1000, 'minFlux': -1000})
                 new_media_list.append(new_media)
 
-        print("Made %s Media Files" % len(media_ids)-1)
+        print("Made %s Media Files" % (len(media_ids)-1))
         info = self.ws.save_objects(
             {'workspace': ws_name,
              "objects": [{
@@ -117,6 +118,8 @@ class MutualInfoUtil:
         """
         _generate_html_report: generate html summary report
         """
+        #scratch, uui, datafileutil, file_to_shock, shockId, extended report
+
         log('start generating html report')
         
         html_report = list()
@@ -161,15 +164,30 @@ class MutualInfoUtil:
         _generate_report: generate summary report
         """
 
+        uuidStr = str(uuid.uuid4())
+        self._mkdir_p(result_directory + '/' + uuidStr)
+
+        shutil.copy('/kb/module/data/index.html', result_directory + '/' + uuidStr + '/index.html')
+        shutil.copy('pdata.json', result_directory + '/' + uuidStr + '/pdata.json')
+
+        # DataFileUtils to shock
+        report_shock_id = self.dfu.file_to_shock({'file_path': result_directory + '/' + uuidStr,
+                                                  'make_handler': 0,
+                                                  'pack': 'zip'})['shock_id']
+
+        report_file = {'name': 'index.html',
+                       'description': 'the report',
+                       'shock_id': report_shock_id}
+
         log('creating report')
-        output_html_files = self._generate_html_report(result_directory,
-                                                       mutual_info_dict)
+        #output_html_files = self._generate_html_report(result_directory,
+        #                                               mutual_info_dict)
         report_params = {'message': '',
                          'workspace_name': params.get('workspace_name'),
-                         'html_links': output_html_files,
+                         'html_links': [report_file],
                          'direct_html_link_index': 0,
                          'html_window_height': 333,
-                         'report_object_name': 'MutualInfomation_report_' + str(uuid.uuid4())}
+                         'report_object_name': 'MutualInfomation_report_' + uuidStr}
 
         kbase_report_client = KBaseReport(self.callback_url)
         output = kbase_report_client.create_extended_report(report_params)
@@ -178,7 +196,7 @@ class MutualInfoUtil:
 
         return report_output       
 
-    def _generate_mutual_info(self, media_matrix, fba_file):
+    def _generate_mutual_info(self, media_matrix, fba_file, mi_options):
 
         df1 = pd.read_csv(fba_file)
         df1.as_matrix()
@@ -191,6 +209,8 @@ class MutualInfoUtil:
         #   1.1. If the elements are different: Through an ERROR saying not approapriate input values
         # 1.2 Check whether the compounds in Media.csv file match with number of FBAs
         #   1.2. If the compounds are different from number of FBAs: Through an ERROR saying not appropriate input values
+
+        print media_matrix
 
         s_df1 = df1.shape
         s_df2 = media_matrix.shape
@@ -338,14 +358,38 @@ class MutualInfoUtil:
         MI_dict = sorted(MI_dict.items(), key=lambda x: (-len(x[0]), x[0]))
         MI_dict = OrderedDict(MI_dict)
 
-        print("Plot MI_dict")
-        plt.bar(range(len(MI_dict)), MI_dict.values(), align='center', alpha=0.5, width=0.7)
-        plt.xticks(range(len(MI_dict)), MI_dict.keys(), rotation='vertical')
-        plt.xlabel('Compund Combinations')
-        plt.ylabel('Mutual Information (in Bits)')
-        plt.title("Organism:XYZ")
-        fig1 = plt.gcf()
-        fig1.savefig(os.path.join(self.scratch, 'MI_plot.png'), dpi=100)
+        x_groups = [[] for x in range(num_compounds)]
+        y_groups = [[] for x in range(num_compounds)]
+        names = [[] for x in range(num_compounds)]
+        Comp_Mapping = [[] for x in range(num_compounds)]
 
+        for key, val in MI_dict.iteritems():
+            del_count = key.count(',')
+            x_groups[del_count].append(key)
+            y_groups[del_count].append(val)
+
+            # for x, y in zip(x_groups, y_groups):
+            # data.append(go.Bar(x=x, y=y, name='test'))
+
+        compound_IDs = ['H2', 'Vitamin K', 'Hematine', 'Glucose', 'Acetate', 'Formate', 'B12']
+
+        pdata = []
+        for i in range(0, len(x_groups)):
+            names[i] = str(i + 1) + ' Compound Combination'
+            Comp_Mapping = str(i + 1) + '-' + compound_IDs[i]
+
+            record = {}
+            record["x"] = []
+            for e in x_groups[i]:
+                record["x"].append("c" + e)
+            record["y"] = y_groups[i]
+            record["names"] = names[i]
+            record["Comp_Mapping"] = Comp_Mapping
+            pdata.append(record)
+
+        print pdata
+
+        with open('pdata.json', 'w') as outfile:
+            json.dump(pdata, outfile)
         return MI_dict
    

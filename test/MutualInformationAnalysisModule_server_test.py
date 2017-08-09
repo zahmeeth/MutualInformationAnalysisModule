@@ -86,6 +86,8 @@ class MutualInformationAnalysisModuleTest(unittest.TestCase):
         #
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
-        params = {'fbamodel_id': "iMR1_799", 'compounds': ['cpd00099_c0', 'cpd12345_c0'],
-                  'media_id': "MR1_Minimal_Media", 'workspace_name': 'jjeffryes:narrative_1501177142429'}
+        params = {'fbamodel_id': "iMR1_799", 'compounds': 'cpd00099_c0, cpd12345_c0',
+                  'media_id': "MR1_Minimal_Media", 'workspace_name': 'jjeffryes:narrative_1501177142429', 'mi_options': 'flux'}
+        #params = {'fbamodel_id': "meh", 'compounds': "foo", 'media_id': "bar", 'workspace_name': self.getWsName()}
+        print 'test methd !'
         self.getImpl().run_flux_mutual_information_analysis(self.getContext(), params)

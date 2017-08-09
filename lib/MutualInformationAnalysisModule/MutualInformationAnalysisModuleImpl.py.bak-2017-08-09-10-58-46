@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-#BEGIN_HEADER
+# BEGIN_HEADER
 import os
 import json
 
 from MutualInformationAnalysisModule.Utils.MutualInfoUtil import MutualInfoUtil
 
 
-#END_HEADER
+# END_HEADER
 
 
 class MutualInformationAnalysisModule:
@@ -28,73 +28,55 @@ class MutualInformationAnalysisModule:
     GIT_URL = "https://github.com/zahmeeth/MutualInformationAnalysisModule.git"
     GIT_COMMIT_HASH = "5a6e49e71ea48c5286b2cd52749c412a3a7669b3"
 
-    #BEGIN_CLASS_HEADER
-    #END_CLASS_HEADER
+    # BEGIN_CLASS_HEADER
+    # END_CLASS_HEADER
 
     # config contains contents of config file in a hash or None if it couldn't
     # be found
     def __init__(self, config):
-        #BEGIN_CONSTRUCTOR
+        # BEGIN_CONSTRUCTOR
         self.config = config
         self.config['SDK_CALLBACK_URL'] = os.environ['SDK_CALLBACK_URL']
         self.config['KB_AUTH_TOKEN'] = os.environ['KB_AUTH_TOKEN']
         self.scratch = config['scratch']
-        #END_CONSTRUCTOR
+        # END_CONSTRUCTOR
         pass
 
     def run_flux_mutual_information_analysis(self, ctx, params):
         """
-         :param params: instance of type
-            "RunFluxMutualInformationAnalysisParams" -> structure: parameter
-            "fbamodel_id" of type "ws_fbamodel_id" (The workspace ID for a
-            FBAModel data object. @id ws KBaseFBA.FBAModel), parameter
-            "compounds" of list of type "compound_id" (A string representing a
-            compound id.), parameter "workspace_name" of String, parameter
-            "media_id" of String, parameter "mi_options" of String
-         :returns: instance of type "RunFluxMutualInformationAnalysisResults"
-            -> structure: parameter "report_name" of String, parameter
-            "report_ref" of type "ws_report_id" (The workspace ID for a Report
-            object @id ws KBaseReport.Report)
-         """
+        :param params: instance of type
+           "RunFluxMutualInformationAnalysisParams" -> structure: parameter
+           "fbamodel_id" of type "ws_fbamodel_id" (The workspace ID for a
+           FBAModel data object. @id ws KBaseFBA.FBAModel), parameter
+           "compounds" of list of type "compound_id" (A string representing a
+           compound id.), parameter "workspace" of String, parameter
+           "media_id" of String
+        :returns: instance of type "RunFluxMutualInformationAnalysisResults"
+           -> structure: parameter "report_name" of String, parameter
+           "report_ref" of type "ws_report_id" (The workspace ID for a Report
+           object @id ws KBaseReport.Report)
+        """
         # ctx is the context object
         # return variables are: output
-        #BEGIN run_flux_mutual_information_analysis
+        # BEGIN run_flux_mutual_information_analysis
         print('Starting flux mutual information analysis method.')
 
         MI_runner = MutualInfoUtil(self.config)
         MI_runner._validate_run_flux_mutual_information_analysis_params(params)
         fbamodel_id = params.get('fbamodel_id')
-        # compounds is maybe a string delimited by ','
         compounds = params.get('compounds')
-        if isinstance(params.get('compounds'), str):
-            compounds = params.get('compounds').split(',')
         media_id = params.get('media_id')
         workspace_name = params.get('workspace_name')
 
-        print(params)
-
+        # compounds_file = MutualInfoUtil._get_file_from_ws(compounds)
         # fba_file = MutualInfoUtil._get_file_from_ws(fba_object_ref)
-        print('Making Media Objects')
-        media_id_list, media_matrix = MI_runner._make_media_files(workspace_name, media_id, compounds)
-        # Loading media matrix - which is shared by all three modes of the function
-        import pandas as pd
-        media_matrix = pd.read_csv('/kb/module/data/AllFBAs_7.csv')
-        media_matrix.as_matrix()
-        # Loading fluxes when running in flux mode
-        data_file = "";
-        if params['mi_options'] == "flux":
-            data_file = '/kb/module/data/BT_7bits.csv'
-        elif params['mi_options'] == "biomass":
-            data_file = '/kb/module/data/biomass.csv'
-        elif params['mi_options'] == "secretion":
-            data_file = '/kb/module/data/secretion.csv'
-        # Running core mutual information function
-        mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file, params['mi_options'])
-        # Writing output report
-        output = {}
+        fba_file = '/kb/module/data/BT_7bits.csv'
+        compounds_file = '/kb/module/data/AllFBAs_7.csv'
+        mutual_info = MI_runner._generate_mutual_info(compounds_file, fba_file)
+        print('YAY!')
         output = MI_runner._generate_report(self.scratch, mutual_info, params)
 
-        #END run_flux_mutual_information_analysis
+        # END run_flux_mutual_information_analysis
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
@@ -104,11 +86,11 @@ class MutualInformationAnalysisModule:
         return [output]
 
     def status(self, ctx):
-        #BEGIN_STATUS
+        # BEGIN_STATUS
         returnVal = {'state': "OK",
                      'message': "",
                      'version': self.VERSION,
                      'git_url': self.GIT_URL,
                      'git_commit_hash': self.GIT_COMMIT_HASH}
-        #END_STATUS
+        # END_STATUS
         return [returnVal]
