@@ -65,9 +65,9 @@ class MutualInformationAnalysisModule:
         MI_runner._validate_run_flux_mutual_information_analysis_params(params)
         fbamodel_id = params.get('fbamodel_id')
         # compounds is maybe a string delimited by ','
-        compounds = params.get('compounds')
-        if isinstance(params.get('compounds'), str):
-            compounds = params.get('compounds').split(',')
+        compounds = params.get('compounds').split(',')
+        #if isinstance(params.get('compounds'), str):
+        #    compounds = params.get('compounds').split(',')
         media_id = params.get('media_id')
         workspace_name = params.get('workspace_name')
 
