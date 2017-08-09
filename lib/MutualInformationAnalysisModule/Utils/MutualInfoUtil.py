@@ -84,7 +84,10 @@ class MutualInfoUtil:
 
         media_ids = [base_media['id']]
         new_media_list = []
-        media_matrix = [[""]+compounds]
+        #compounds is not a list therefore '+' a list is not valid and crashes
+        #media_matrix = [[""]+compounds]
+        #temporary patch default to empty
+        media_matrix = list()
         media_matrix.append([base_media['id']+[0]*len(compounds)])
         for n_comp in range(1, len(compounds)+1):
             for combo in combinations(compounds, n_comp):
