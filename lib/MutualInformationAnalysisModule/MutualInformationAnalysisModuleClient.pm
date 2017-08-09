@@ -124,8 +124,9 @@ $output is a MutualInformationAnalysisModule.RunFluxMutualInformationAnalysisRes
 RunFluxMutualInformationAnalysisParams is a reference to a hash where the following keys are defined:
 	fbamodel_id has a value which is a MutualInformationAnalysisModule.ws_fbamodel_id
 	compounds has a value which is a reference to a list where each element is a MutualInformationAnalysisModule.compound_id
-	workspace has a value which is a string
+	workspace_name has a value which is a string
 	media_id has a value which is a string
+	mi_options has a value which is a string
 ws_fbamodel_id is a string
 compound_id is a string
 RunFluxMutualInformationAnalysisResults is a reference to a hash where the following keys are defined:
@@ -144,8 +145,9 @@ $output is a MutualInformationAnalysisModule.RunFluxMutualInformationAnalysisRes
 RunFluxMutualInformationAnalysisParams is a reference to a hash where the following keys are defined:
 	fbamodel_id has a value which is a MutualInformationAnalysisModule.ws_fbamodel_id
 	compounds has a value which is a reference to a list where each element is a MutualInformationAnalysisModule.compound_id
-	workspace has a value which is a string
+	workspace_name has a value which is a string
 	media_id has a value which is a string
+	mi_options has a value which is a string
 ws_fbamodel_id is a string
 compound_id is a string
 RunFluxMutualInformationAnalysisResults is a reference to a hash where the following keys are defined:
@@ -440,8 +442,9 @@ a string
 a reference to a hash where the following keys are defined:
 fbamodel_id has a value which is a MutualInformationAnalysisModule.ws_fbamodel_id
 compounds has a value which is a reference to a list where each element is a MutualInformationAnalysisModule.compound_id
-workspace has a value which is a string
+workspace_name has a value which is a string
 media_id has a value which is a string
+mi_options has a value which is a string
 
 </pre>
 
@@ -452,8 +455,9 @@ media_id has a value which is a string
 a reference to a hash where the following keys are defined:
 fbamodel_id has a value which is a MutualInformationAnalysisModule.ws_fbamodel_id
 compounds has a value which is a reference to a list where each element is a MutualInformationAnalysisModule.compound_id
-workspace has a value which is a string
+workspace_name has a value which is a string
 media_id has a value which is a string
+mi_options has a value which is a string
 
 
 =end text

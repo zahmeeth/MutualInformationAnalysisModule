@@ -40,8 +40,8 @@ class MutualInformationAnalysisModule(object):
            "fbamodel_id" of type "ws_fbamodel_id" (The workspace ID for a
            FBAModel data object. @id ws KBaseFBA.FBAModel), parameter
            "compounds" of list of type "compound_id" (A string representing a
-           compound id.), parameter "workspace" of String, parameter
-           "media_id" of String
+           compound id.), parameter "workspace_name" of String, parameter
+           "media_id" of String, parameter "mi_options" of String
         :returns: instance of type "RunFluxMutualInformationAnalysisResults"
            -> structure: parameter "report_name" of String, parameter
            "report_ref" of type "ws_report_id" (The workspace ID for a Report

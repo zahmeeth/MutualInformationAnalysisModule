@@ -24,7 +24,7 @@ class MutualInformationAnalysisModule:
     ######################################### noqa
     VERSION = "1.0.0"
     GIT_URL = "https://github.com/zahmeeth/MutualInformationAnalysisModule.git"
-    GIT_COMMIT_HASH = "5a6e49e71ea48c5286b2cd52749c412a3a7669b3"
+    GIT_COMMIT_HASH = "90a8e7e2d30b52d9b4c6b8c079770be791c41eb3"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -48,8 +48,8 @@ class MutualInformationAnalysisModule:
            "fbamodel_id" of type "ws_fbamodel_id" (The workspace ID for a
            FBAModel data object. @id ws KBaseFBA.FBAModel), parameter
            "compounds" of list of type "compound_id" (A string representing a
-           compound id.), parameter "workspace_name" of String, parameter
-           "media_id" of String, parameter "mi_options" of String
+           compound id.), parameter "workspace" of String, parameter
+           "media_id" of String
         :returns: instance of type "RunFluxMutualInformationAnalysisResults"
            -> structure: parameter "report_name" of String, parameter
            "report_ref" of type "ws_report_id" (The workspace ID for a Report

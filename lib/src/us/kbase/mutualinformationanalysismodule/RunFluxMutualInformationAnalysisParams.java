@@ -22,8 +22,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "fbamodel_id",
     "compounds",
-    "workspace",
-    "media_id"
+    "workspace_name",
+    "media_id",
+    "mi_options"
 })
 public class RunFluxMutualInformationAnalysisParams {
 
@@ -31,10 +32,12 @@ public class RunFluxMutualInformationAnalysisParams {
     private java.lang.String fbamodelId;
     @JsonProperty("compounds")
     private List<String> compounds;
-    @JsonProperty("workspace")
-    private java.lang.String workspace;
+    @JsonProperty("workspace_name")
+    private java.lang.String workspaceName;
     @JsonProperty("media_id")
     private java.lang.String mediaId;
+    @JsonProperty("mi_options")
+    private java.lang.String miOptions;
     private Map<java.lang.String, Object> additionalProperties = new HashMap<java.lang.String, Object>();
 
     @JsonProperty("fbamodel_id")
@@ -67,18 +70,18 @@ public class RunFluxMutualInformationAnalysisParams {
         return this;
     }
 
-    @JsonProperty("workspace")
-    public java.lang.String getWorkspace() {
-        return workspace;
+    @JsonProperty("workspace_name")
+    public java.lang.String getWorkspaceName() {
+        return workspaceName;
     }
 
-    @JsonProperty("workspace")
-    public void setWorkspace(java.lang.String workspace) {
-        this.workspace = workspace;
+    @JsonProperty("workspace_name")
+    public void setWorkspaceName(java.lang.String workspaceName) {
+        this.workspaceName = workspaceName;
     }
 
-    public RunFluxMutualInformationAnalysisParams withWorkspace(java.lang.String workspace) {
-        this.workspace = workspace;
+    public RunFluxMutualInformationAnalysisParams withWorkspaceName(java.lang.String workspaceName) {
+        this.workspaceName = workspaceName;
         return this;
     }
 
@@ -97,6 +100,21 @@ public class RunFluxMutualInformationAnalysisParams {
         return this;
     }
 
+    @JsonProperty("mi_options")
+    public java.lang.String getMiOptions() {
+        return miOptions;
+    }
+
+    @JsonProperty("mi_options")
+    public void setMiOptions(java.lang.String miOptions) {
+        this.miOptions = miOptions;
+    }
+
+    public RunFluxMutualInformationAnalysisParams withMiOptions(java.lang.String miOptions) {
+        this.miOptions = miOptions;
+        return this;
+    }
+
     @JsonAnyGetter
     public Map<java.lang.String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -109,7 +127,7 @@ public class RunFluxMutualInformationAnalysisParams {
 
     @Override
     public java.lang.String toString() {
-        return ((((((((((("RunFluxMutualInformationAnalysisParams"+" [fbamodelId=")+ fbamodelId)+", compounds=")+ compounds)+", workspace=")+ workspace)+", mediaId=")+ mediaId)+", additionalProperties=")+ additionalProperties)+"]");
+        return ((((((((((((("RunFluxMutualInformationAnalysisParams"+" [fbamodelId=")+ fbamodelId)+", compounds=")+ compounds)+", workspaceName=")+ workspaceName)+", mediaId=")+ mediaId)+", miOptions=")+ miOptions)+", additionalProperties=")+ additionalProperties)+"]");
     }
 
 }

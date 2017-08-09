@@ -26,8 +26,9 @@ module MutualInformationAnalysisModule {
     typedef structure {
         ws_fbamodel_id fbamodel_id;
         list<compound_id> compounds;
-        string workspace;
+        string workspace_name;
         string media_id;
+        string mi_options;
     } RunFluxMutualInformationAnalysisParams;
     
     typedef structure {
