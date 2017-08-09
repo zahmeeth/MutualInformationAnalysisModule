@@ -67,6 +67,8 @@ class MutualInformationAnalysisModule:
         media_id = params.get('media_id')
         workspace_name = params.get('workspace_name')
 
+        print(params)
+
         #fba_file = MutualInfoUtil._get_file_from_ws(fba_object_ref)
         print('Making Media Objects')
         media_id_list, media_matrix = MI_runner._make_media_files(workspace_name, media_id, compounds)
