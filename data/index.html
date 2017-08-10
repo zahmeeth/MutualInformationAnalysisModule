@@ -9,8 +9,35 @@
     </style>
 </head>
 <body>
-<div id="plot"></div>
-<div id="label-container"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- labels on the right>
+        <!--
+        <div class="col-md-10">
+            <div id="plot"></div>
+        </div>
+        <div class="col-md-2">
+            <div id="label-container"></div>
+        </div>
+        -->
+        <div class="col-md-12">
+            <div id="plot"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="label-container"></div>
+        </div>
+    </div>
+    <div class="row" style=" margin-top: 10px;">
+        <div class="col-md-12">
+            <div id="compound-container"></div>
+        </div>
+    </div>
+</div>
+
+
+
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -48,6 +75,7 @@ _.each(pdata, function(group) {
     data.x.push(group.x[i]);
     data.y.push(group.y[i]);
     data.names.push(group.names[i]);
+    //data.Comp_Mapping.push(group.Comp_Mapping);
     data.marker.color.push(color);
   }
 });
@@ -74,6 +102,7 @@ var data = {
   x: [],
   y: [],
   names:[],
+  Comp_Mapping: [],
   marker:{
     color: []
   },
@@ -121,10 +150,21 @@ var makeLabels = function(pdata) {
   });
 }
 
+var mapLabels = function(pdata) {
+  var maplabelContainer = $('#compound-container');
+  _.each(pdata, function(group) {
+    var mapname = group.Comp_Mapping || "unamed";
+    maplabelContainer.append(
+      '<div class="pull-left label-box">' + mapname +
+      '</div>');
+  });
+}
+
 $(function () {
   $.getJSON('pdata.json', function(pdata) {
     console.log(pdata)
     makeLabels(pdata);
+    mapLabels(pdata);
     Plotly.newPlot('plot', [makePlotyData(pdata)], layout);
   });
 });

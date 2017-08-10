@@ -91,7 +91,6 @@ class MutualInformationAnalysisModule:
         # Running core mutual information function
         mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file, params['mi_options'])
         # Writing output report
-        output = {}
         output = MI_runner._generate_report(self.scratch, mutual_info, params)
 
         #END run_flux_mutual_information_analysis
