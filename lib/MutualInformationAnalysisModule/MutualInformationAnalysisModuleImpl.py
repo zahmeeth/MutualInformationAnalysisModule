@@ -85,7 +85,7 @@ class MutualInformationAnalysisModule:
         if params['mi_options'] == "flux":
             data_file = '/kb/module/data/BT_7bits.csv'
         elif params['mi_options'] == "biomass":
-            data_file = '/kb/module/data/biomass.csv'
+            data_file = '/kb/module/data/BT_Biomass.csv'
         elif params['mi_options'] == "secretion":
             data_file = '/kb/module/data/secretion.csv'
         # Running core mutual information function
