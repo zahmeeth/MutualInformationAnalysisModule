@@ -244,7 +244,7 @@ class MutualInfoUtil:
         
         return html_report
 
-    def _generate_report(self, result_directory, mutual_info_dict, params):
+    def _generate_report(self, result_directory, mutual_info_dict, params,paths):
         """
         _generate_report: generate summary report
         """
@@ -263,6 +263,26 @@ class MutualInfoUtil:
         report_file = {'name': 'index.html',
                        'description': 'the report',
                        'shock_id': report_shock_id}
+                       
+        biomass_file = {'name': 'biomass_file.csv',
+                       'description': 'biomass_file',
+                       'path': paths[0]}
+        
+        flux_file = {'name': 'flux_file.csv',
+                       'description': 'flux_file',
+                       'path': paths[1]}
+                       
+        full_flux_file = {'name': 'full_flux_file.csv',
+                       'description': 'full_flux_file',
+                       'path': paths[2]}
+                       
+        secretion_file = {'name': 'secretion_file.csv',
+                       'description': 'secretion_file',
+                       'path': paths[3]}
+                       
+        full_secretion_file = {'name': 'full_secretion_file.csv',
+                       'description': 'full_secretion_file',
+                       'path': paths[4]}
 
         log('creating report')
         #output_html_files = self._generate_html_report(result_directory,
@@ -270,6 +290,7 @@ class MutualInfoUtil:
         report_params = {'message': '',
                          'workspace_name': params.get('workspace_name'),
                          'html_links': [report_file],
+                         'file_links': [biomass_file,flux_file,full_flux_file,secretion_file,full_secretion_file],
                          'direct_html_link_index': 0,
                          'html_window_height': 333,
                          'report_object_name': 'MutualInfomation_report_' + uuidStr}
