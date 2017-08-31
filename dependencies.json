@@ -3,6 +3,10 @@
   "type" : "sdk",
   "version_tag" : "release"
 }, {
+  "module_name" : "fba_tools",
+  "type" : "sdk",
+  "version_tag" : "beta"
+}, {
   "module_name" : "KBaseReport",
   "type" : "sdk",
   "version_tag" : "release"

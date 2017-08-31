@@ -76,6 +76,7 @@ class MutualInformationAnalysisModule:
         # fba_file = MutualInfoUtil._get_file_from_ws(fba_object_ref)
         print('Making Media Objects')
         media_id_list, media_matrix = MI_runner._make_media_files(workspace_name, media_id, compounds)
+        [biomass_path,secretion_path,flux_path,full_secretion_path,full_flux_path] = MI_runner._run_fba(workspace_name, media_id_list, fbamodel_id)
         # Loading media matrix - which is shared by all three modes of the function
         import pandas as pd
         media_matrix = pd.read_csv('/kb/module/data/AllFBAs_7.csv')
@@ -83,11 +84,11 @@ class MutualInformationAnalysisModule:
         # Loading fluxes when running in flux mode
         data_file = "";
         if params['mi_options'] == "flux":
-            data_file = '/kb/module/data/BT_7bits.csv'
+            data_file = flux_path
         elif params['mi_options'] == "biomass":
-            data_file = '/kb/module/data/BT_Biomass.csv'
+            data_file = biomass_path
         elif params['mi_options'] == "secretion":
-            data_file = '/kb/module/data/secretion.csv'
+            data_file = secretion_path
         # Running core mutual information function
         mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file, params['mi_options'])
         # Writing output report

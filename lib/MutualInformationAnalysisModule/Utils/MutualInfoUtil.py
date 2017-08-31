@@ -13,6 +13,7 @@ import itertools
 import json
 from itertools import combinations
 import matplotlib
+from fba_tools.fba_toolsClient import fba_tools
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 from copy import deepcopy
@@ -113,6 +114,90 @@ class MutualInfoUtil:
         print info
         return media_ids, media_matrix
 
+    def _run_fba(self, workspace_name, media_id_list, fbamodel_id):
+    	fba_tools = fba_tools(self.callback_url)
+    	fba_tools.run_flux_balance_analysis({
+			"workspace" : workspace_name
+			"fbamodel_id" : fbamodel_id,
+			"fba_output_id" : fbamodel_id + ".mifba",
+			"fbamodel_workspace" : workspace_name,
+			"media_id_list" : media_list,
+			"target_reaction" : "bio1",
+			"minimize_flux" : 1
+		})
+		output = self.ws.get_objects2({
+			'objects' : [{
+				'ref' : workspace_name + "/" + fbamodel_id + '.mifba'
+			}]
+        })
+        
+        fba = output['data'][0]['data']
+        biomass_data = "FBAs,Biomass\n"
+        secretion_file = ","+','.join(media_list)+"\n"
+        full_secretion_file = ","+','.join(media_list)+"\n"
+        full_flux_file = ","+','.join(media_list)+"\n"
+        flux_file = ","+','.join(media_list)+"\n"
+        objectives = fba['other_objectives']
+        for i in range(0, len(objectives)):
+        	biomass_data = biomass_data + media_list[i] + "," + objectives[i] + "\n"
+        
+        flux_vars = fba['FBAReactionVariables']
+        for var in flux_vars:
+        	id = var['modelreaction_ref'].split("/").pop()
+        	flux_file = flux_file + id
+        	full_flux_file = full_flux_file + id
+        	fluxes = var['other_values']
+        	for i in range(0, len(fluxes)):
+        		full_flux_file = full_flux_file + "," + fluxes[i]
+        		if abs(fluxes[i]) < 1e-7:
+        			flux_file = flux_file + ",0"
+        		else:
+        			flux_file = flux_file + ",1"
+        	flux_file = flux_file + "\n"
+        	full_flux_file = full_flux_file + "\n"
+        
+        secretion_vars = fba['FBACompoundVariables']
+        for var in secretion_vars:
+        	id = var['modelcompound_ref'].split("/").pop()
+        	secretion_file = secretion_file + id
+        	full_secretion_file = full_secretion_file + id
+        	fluxes = var['other_values']
+        	for i in range(0, len(fluxes)):
+        		full_secretion_file = full_secretion_file + "," + fluxes[i]
+        		if abs(fluxes[i]) < 1e-7:
+        			secretion_file = secretion_file + ",0"
+        		elif fluxes[i] < 0:
+        			secretion_file = secretion_file + ",-1"
+        		else:
+        			secretion_file = secretion_file + ",1"
+        	secretion_file = secretion_file + "\n"
+        	full_secretion_file = full_secretion_file + "\n"
+        	
+        output_directory = os.path.join(self.scratch, str(uuid.uuid4()))
+        self._mkdir_p(output_directory)
+        biomass_path = os.path.join(output_directory, 'biomass.csv')
+        secretion_path = os.path.join(output_directory, 'secretion.csv')
+        flux_path = os.path.join(output_directory, 'flux.csv')
+        full_secretion_path = os.path.join(output_directory, 'full_secretion.csv')
+        full_flux_path = os.path.join(output_directory, 'full_flux.csv')
+        
+        with open(biomass_path, 'w') as biomass_f:
+        	biomass_f.write(biomass_data)
+        
+        with open(secretion_path, 'w') as secretion_f:
+        	secretion_f.write(secretion_file)
+        
+        with open(flux_path, 'w') as flux_f:
+        	flux_f.write(flux_file)
+        	
+        with open(full_secretion_path, 'w') as full_secretion_f:
+        	full_secretion_f.write(full_secretion_file)
+        
+        with open(full_flux_path, 'w') as full_flux_f:
+        	full_flux_f.write(full_flux_file) 
+        
+        return [biomass_path,secretion_path,flux_path,full_secretion_path,full_flux_path]
+    
     def _generate_html_report(self, result_directory, mutual_info_dict):
         
         """
