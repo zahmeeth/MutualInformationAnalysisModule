@@ -83,7 +83,7 @@ class MutualInfoUtil:
 		:return: A list of media ids and a matrix with each media combination defined
 		"""
 		base_media = self._get_file_from_ws(ws_name, base)['data']
-		uuid = str(uuid.uuid4())
+		myuuid = str(uuid.uuid4())
 		media_ids = [base_media['id']]
 		new_media_list = []
 		media_matrix = [[""]+compounds]
@@ -109,17 +109,17 @@ class MutualInfoUtil:
 				 "hidden": 1,
 				 "type": "KBaseBiochem.Media",
 				 "data": media,
-				 "name": uuid + "-" + media['name']
+				 "name": myuuid + "-" + media['name']
 			 } for media in new_media_list]
 			 })
 		print info
-		return media_ids, media_matrix, uuid
+		return media_ids, media_matrix, myuuid
 
-	def _run_fba(self, workspace_name, media_id_list, fbamodel_id, uuid):
+	def _run_fba(self, workspace_name, media_id_list, fbamodel_id, myuuid):
 		fba_tool_obj = fba_tools(self.callback_url)
 		new_media_list = []
 		for media in media_id_list:
-			new_media_list.append(uuid + "-" + media)
+			new_media_list.append(myuuid + "-" + media)
 		
 		fba_tool_obj.run_flux_balance_analysis({
 			"workspace" : workspace_name,
