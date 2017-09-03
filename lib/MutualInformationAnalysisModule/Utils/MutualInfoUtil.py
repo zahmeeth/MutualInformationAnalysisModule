@@ -120,9 +120,9 @@ class MutualInfoUtil:
 		new_media_list = []
 		for media in media_id_list:
 			if media == base_media:
-				new_media_list.append(media)
+				new_media_list.append(workspace_name + "/" + media)
 			else:
-				new_media_list.append(myuuid + "-" + media)
+				new_media_list.append(workspace_name + "/" + myuuid + "-" + media)
 		
 		fba_tool_obj.run_flux_balance_analysis({
 			"workspace" : workspace_name,
