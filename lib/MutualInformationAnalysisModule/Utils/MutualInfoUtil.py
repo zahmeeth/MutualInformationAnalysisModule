@@ -106,6 +106,7 @@ class MutualInfoUtil:
 		info = self.ws.save_objects(
 			{'workspace': ws_name,
 			 "objects": [{
+				 "hidden": 1,
 				 "type": "KBaseBiochem.Media",
 				 "data": media,
 				 "name": media['name']
