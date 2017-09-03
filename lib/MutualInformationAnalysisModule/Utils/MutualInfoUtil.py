@@ -147,7 +147,7 @@ class MutualInfoUtil:
 		flux_file = ","+','.join(media_id_list)+"\n"
 		objectives = fba['other_objectives']
 		for i in range(0, len(objectives)):
-			biomass_data = biomass_data + media_id_list[i] + "," + objectives[i] + "\n"
+			biomass_data = biomass_data + media_id_list[i] + "," + str(objectives[i]) + "\n"
 		
 		flux_vars = fba['FBAReactionVariables']
 		for var in flux_vars:
@@ -156,7 +156,7 @@ class MutualInfoUtil:
 			full_flux_file = full_flux_file + id
 			fluxes = var['other_values']
 			for i in range(0, len(fluxes)):
-				full_flux_file = full_flux_file + "," + fluxes[i]
+				full_flux_file = full_flux_file + "," + str(fluxes[i])
 				if abs(fluxes[i]) < 1e-7:
 					flux_file = flux_file + ",0"
 				else:
@@ -171,7 +171,7 @@ class MutualInfoUtil:
 			full_secretion_file = full_secretion_file + id
 			fluxes = var['other_values']
 			for i in range(0, len(fluxes)):
-				full_secretion_file = full_secretion_file + "," + fluxes[i]
+				full_secretion_file = full_secretion_file + "," + str(fluxes[i])
 				if abs(fluxes[i]) < 1e-7:
 					secretion_file = secretion_file + ",0"
 				elif fluxes[i] < 0:
