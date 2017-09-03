@@ -115,8 +115,8 @@ class MutualInfoUtil:
 		return media_ids, media_matrix
 
 	def _run_fba(self, workspace_name, media_id_list, fbamodel_id):
-		fba_tools = fba_tools(self.callback_url)
-		fba_tools.run_flux_balance_analysis({
+		fba_tool_obj = fba_tools(self.callback_url)
+		fba_tool_obj.run_flux_balance_analysis({
 			"workspace" : workspace_name,
 			"fbamodel_id" : fbamodel_id,
 			"fba_output_id" : fbamodel_id + ".mifba",
