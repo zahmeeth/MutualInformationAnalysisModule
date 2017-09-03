@@ -83,7 +83,7 @@ class MutualInfoUtil:
 		:return: A list of media ids and a matrix with each media combination defined
 		"""
 		base_media = self._get_file_from_ws(ws_name, base)['data']
-		uuid = str(uuid.uuid4()))
+		uuid = str(uuid.uuid4())
 		media_ids = [base_media['id']]
 		new_media_list = []
 		media_matrix = [[""]+compounds]
