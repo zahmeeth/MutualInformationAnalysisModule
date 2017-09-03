@@ -115,11 +115,14 @@ class MutualInfoUtil:
 		print info
 		return media_ids, media_matrix, myuuid
 
-	def _run_fba(self, workspace_name, media_id_list, fbamodel_id, myuuid):
+	def _run_fba(self, workspace_name, media_id_list, fbamodel_id, myuuid, base_media):
 		fba_tool_obj = fba_tools(self.callback_url)
 		new_media_list = []
 		for media in media_id_list:
-			new_media_list.append(myuuid + "-" + media)
+			if media == base_media:
+				new_media_list.append(media)
+			else:
+				new_media_list.append(myuuid + "-" + media)
 		
 		fba_tool_obj.run_flux_balance_analysis({
 			"workspace" : workspace_name,
