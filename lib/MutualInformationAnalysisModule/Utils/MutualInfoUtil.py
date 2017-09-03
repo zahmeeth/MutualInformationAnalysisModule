@@ -141,13 +141,13 @@ class MutualInfoUtil:
 		
 		fba = output['data'][0]['data']
 		biomass_data = "FBAs,Biomass\n"
-		secretion_file = ","+','.join(media_list)+"\n"
-		full_secretion_file = ","+','.join(media_list)+"\n"
-		full_flux_file = ","+','.join(media_list)+"\n"
-		flux_file = ","+','.join(media_list)+"\n"
+		secretion_file = ","+','.join(media_id_list)+"\n"
+		full_secretion_file = ","+','.join(media_id_list)+"\n"
+		full_flux_file = ","+','.join(media_id_list)+"\n"
+		flux_file = ","+','.join(media_id_list)+"\n"
 		objectives = fba['other_objectives']
 		for i in range(0, len(objectives)):
-			biomass_data = biomass_data + media_list[i] + "," + objectives[i] + "\n"
+			biomass_data = biomass_data + media_id_list[i] + "," + objectives[i] + "\n"
 		
 		flux_vars = fba['FBAReactionVariables']
 		for var in flux_vars:
