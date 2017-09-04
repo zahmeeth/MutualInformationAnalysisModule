@@ -261,7 +261,7 @@ class MutualInfoUtil:
 		self._mkdir_p(result_directory + '/' + uuidStr)
 
 		shutil.copy('/kb/module/data/index.html', result_directory + '/' + uuidStr + '/index.html')
-		shutil.copy('pdata.json', result_directory + '/' + uuidStr + '/pdata.json')
+		#shutil.copy('pdata.json', result_directory + '/' + uuidStr + '/pdata.json')
 
 		# DataFileUtils to shock
 		report_shock_id = self.dfu.file_to_shock({'file_path': result_directory + '/' + uuidStr,
