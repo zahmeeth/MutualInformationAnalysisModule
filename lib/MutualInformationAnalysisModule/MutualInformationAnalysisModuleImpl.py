@@ -91,6 +91,7 @@ class MutualInformationAnalysisModule:
             data_file = secretion_path
         # Running core mutual information function
         #Temporary measure for debugging
+        mutual_info = {}
         for media in media_id_list:
         	mutual_info[media] = 1
         #mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file, params['mi_options'])
