@@ -64,15 +64,14 @@ class MutualInfoUtil:
 			if p not in params:
 				raise ValueError('"{}" parameter is required, but missing'.format(p))
 
-	def _get_file_from_ws(self, workspace, obj_name):
+	def _get_file_from_ws(self, ref):
 		try:
-			file_path = self.ws.get_objects(
-				[{'name': obj_name,
-				  'workspace': workspace}])[0]
+			file_path = self.ws.get_objects2({'objects':[{'ref': ref}]})
+			file_path = file_path['data'][0]
 		except Exception as e:
 			raise ValueError(
 				'Unable to get object from workspace: (' +
-				workspace + '/' + obj_name + ')' + str(e))
+				ref + ')' + str(e))
 		return file_path
 
 	def _make_media_files(self, ws_name, base, compounds):
@@ -82,15 +81,22 @@ class MutualInfoUtil:
 		:param compounds: the set of compound to test
 		:return: A list of media ids and a matrix with each media combination defined
 		"""
-		base_media = self._get_file_from_ws(ws_name, base)['data']
+		
+		ref = ws_name + "/" + base
+		if base.find("/") != -1:
+			ref = base
+
+		output = self._get_file_from_ws(ref)
+		base_media = output['data']
+		base = output['info'][1]
 		myuuid = str(uuid.uuid4())
-		media_ids = [base_media['id']]
+		media_ids = [base]
 		new_media_list = []
 		media_matrix = [[""]+compounds]
-		media_matrix.append([[base_media['id']]+[0]*len(compounds)])
+		media_matrix.append([[base]+[0]*len(compounds)])
 		for n_comp in range(1, len(compounds)+1):
 			for combo in combinations(compounds, n_comp):
-				new_media_id = base_media['id'] + '_v%s' % len(media_matrix)
+				new_media_id = base + '_v%s' % len(media_matrix)
 				media_ids.append(new_media_id)
 				media_matrix.append([new_media_id]+[1 if comp in combo else 0 for comp in compounds])
 				new_media = deepcopy(base_media)
