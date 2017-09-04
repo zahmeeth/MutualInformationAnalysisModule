@@ -161,12 +161,16 @@ class MutualInfoUtil:
 			flux_file = flux_file + id
 			full_flux_file = full_flux_file + id
 			fluxes = var['other_values']
-			for i in range(0, len(fluxes)):
-				full_flux_file = full_flux_file + "," + str(fluxes[i])
-				if abs(fluxes[i]) < 1e-7:
+			for i in range(0, len(objectives)):
+				if objectives[i] == 0:
+					full_flux_file = full_flux_file + ",0"
 					flux_file = flux_file + ",0"
 				else:
-					flux_file = flux_file + ",1"
+					full_flux_file = full_flux_file + "," + str(fluxes[i])
+					if abs(fluxes[i]) < 1e-7:
+						flux_file = flux_file + ",0"
+					else:
+						flux_file = flux_file + ",1"
 			flux_file = flux_file + "\n"
 			full_flux_file = full_flux_file + "\n"
 		
@@ -176,14 +180,18 @@ class MutualInfoUtil:
 			secretion_file = secretion_file + id
 			full_secretion_file = full_secretion_file + id
 			fluxes = var['other_values']
-			for i in range(0, len(fluxes)):
-				full_secretion_file = full_secretion_file + "," + str(fluxes[i])
-				if abs(fluxes[i]) < 1e-7:
+			for i in range(0, len(objectives)):
+				if objectives[i] == 0:
+					full_secretion_file = full_secretion_file + ",0"
 					secretion_file = secretion_file + ",0"
-				elif fluxes[i] < 0:
-					secretion_file = secretion_file + ",-1"
 				else:
-					secretion_file = secretion_file + ",1"
+					full_secretion_file = full_secretion_file + "," + str(fluxes[i])
+					if abs(fluxes[i]) < 1e-7:
+						secretion_file = secretion_file + ",0"
+					elif fluxes[i] < 0:
+						secretion_file = secretion_file + ",-1"
+					else:
+						secretion_file = secretion_file + ",1"
 			secretion_file = secretion_file + "\n"
 			full_secretion_file = full_secretion_file + "\n"
 			
