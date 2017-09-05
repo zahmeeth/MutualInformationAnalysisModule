@@ -292,19 +292,19 @@ class MutualInfoUtil:
 		
 		flux_file = {'name': 'flux_file.csv',
 					   'description': 'flux_file',
-					   'path': paths[1]}
+					   'path': paths[2]}
 					   
 		full_flux_file = {'name': 'full_flux_file.csv',
 					   'description': 'full_flux_file',
-					   'path': paths[2]}
+					   'path': paths[4]}
 					   
 		secretion_file = {'name': 'secretion_file.csv',
 					   'description': 'secretion_file',
-					   'path': paths[3]}
+					   'path': paths[1]}
 					   
 		full_secretion_file = {'name': 'full_secretion_file.csv',
 					   'description': 'full_secretion_file',
-					   'path': paths[4]}
+					   'path': paths[3]}
 
 		log('creating report')
 		#output_html_files = self._generate_html_report(result_directory,
