@@ -89,11 +89,7 @@ class MutualInformationAnalysisModule:
         elif params['mi_options'] == "secretion":
             data_file = secretion_path
         # Running core mutual information function
-        #Temporary measure for debugging
-        mutual_info = {}
-        for media in media_id_list:
-        	mutual_info[media] = 1
-        #mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file, params['mi_options'])
+        mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file, params['mi_options'])
         # Writing output report
         output = MI_runner._generate_report(self.scratch, mutual_info, params,[biomass_path,secretion_path,flux_path,full_secretion_path,full_flux_path])
 
