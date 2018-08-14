@@ -511,6 +511,7 @@ class MutualInfoUtil:
 					drop_columns_df = drop_rows_df.T.drop_duplicates(keep="first").T
 					remove = []
 					removed = {}
+					count_values = []
 					cols = df[1][k].columns
 					for i in range(len(cols)-1):
 						duplicated = []
