@@ -86,8 +86,20 @@ class MutualInformationAnalysisModuleTest(unittest.TestCase):
         #
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
-        params = {'fbamodel_id': "iMR1_799", 'compounds': 'cpd00099_c0, cpd12345_c0',
-                  'media_id': "MR1_Minimal_Media", 'workspace_name': 'jjeffryes:narrative_1501177142429', 'mi_options': 'flux'}
+
+        params = {'fbamodel_id': "iYL1228", 'compounds': '12dag3p_c0,12dgr_c0,13dpg_c0,cpd00027_c0',
+                  'media_id': "MR1_Minimal_Media", 'workspace_name': 'zahmeeth:narrative_1496764271337', 'mi_options': 'biomass'}
         #params = {'fbamodel_id': "meh", 'compounds': "foo", 'media_id': "bar", 'workspace_name': self.getWsName()}
-        print 'test methd !'
-        self.getImpl().run_flux_mutual_information_analysis(self.getContext(), params)
+
+        print('test methd!')
+        self.getImpl().run_flux_mutual_information_analysis(self.ctx, params)
+
+        """
+        file_ref = "5068/44/2"
+        data = self.getWsClient().get_objects([{"ref": file_ref}])[0][
+            "data"]
+
+        with open(self.scratch + "/output.txt", "w+") as outfile:
+            json.dump(data, outfile)
+        
+        """

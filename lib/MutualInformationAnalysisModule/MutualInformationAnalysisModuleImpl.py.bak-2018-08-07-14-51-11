@@ -4,6 +4,8 @@ import os
 import json
 
 from MutualInformationAnalysisModule.Utils.MutualInfoUtil import MutualInfoUtil
+
+
 #END_HEADER
 
 
@@ -24,7 +26,7 @@ class MutualInformationAnalysisModule:
     ######################################### noqa
     VERSION = "1.0.0"
     GIT_URL = "https://github.com/zahmeeth/MutualInformationAnalysisModule.git"
-    GIT_COMMIT_HASH = "90a8e7e2d30b52d9b4c6b8c079770be791c41eb3"
+    GIT_COMMIT_HASH = "0dfd10d7b3a8af1071600161db22e0b34199786f"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -48,8 +50,8 @@ class MutualInformationAnalysisModule:
            "fbamodel_id" of type "ws_fbamodel_id" (The workspace ID for a
            FBAModel data object. @id ws KBaseFBA.FBAModel), parameter
            "compounds" of list of type "compound_id" (A string representing a
-           compound id.), parameter "workspace" of String, parameter
-           "media_id" of String
+           compound id.), parameter "workspace_name" of String, parameter
+           "media_id" of String, parameter "mi_options" of String
         :returns: instance of type "RunFluxMutualInformationAnalysisResults"
            -> structure: parameter "report_name" of String, parameter
            "report_ref" of type "ws_report_id" (The workspace ID for a Report
@@ -63,29 +65,48 @@ class MutualInformationAnalysisModule:
         MI_runner = MutualInfoUtil(self.config)
         MI_runner._validate_run_flux_mutual_information_analysis_params(params)
         fbamodel_id = params.get('fbamodel_id')
-        compounds = params.get('compounds')
+        # compounds is maybe a string delimited by ','
+        compounds = params.get('compounds').split(',')
+        #if isinstance(params.get('compounds'), str):
+        #    compounds = params.get('compounds').split(',')
         media_id = params.get('media_id')
         workspace_name = params.get('workspace_name')
 
-        #fba_file = MutualInfoUtil._get_file_from_ws(fba_object_ref)
+
         print('Making Media Objects')
-        media_id_list, media_matrix = MI_runner._make_media_files(workspace_name, media_id, compounds)
-        #Loading media matrix - which is shared by all three modes of the function
-        import pandas as pd
-        media_matrix = pd.read_csv('/kb/module/data/AllFBAs_7.csv')
-        media_matrix.as_matrix()
-        #Loading fluxes when running in flux mode
+        #file = open(self.scratch + "/output_1.txt", "w+")
+        #print(file)
+
+        print ('***Start printing details***')
+        media_id_list, media_matrix, myuuid = MI_runner._make_media_files(workspace_name, media_id, compounds)
+
+
+        # Loading media matrix - which is shared by all three modes of the function
+        #import pandas as pd
+        #media_matrix = pd.read_csv('/kb/module/data/AllFBAs_7.csv')
+
+
+        print('-->I am printing compounds')
+        print(compounds, type(compounds))
+        print('-->I am printing media matrix')
+        print(media_matrix, type(media_matrix))
+        print('-->I am printing media_id_list')
+        print(media_id_list, type(media_id_list))
+
+        [biomass_path, secretion_path, flux_path, full_secretion_path, full_flux_path] = MI_runner._run_fba(workspace_name, media_id_list, fbamodel_id, myuuid, media_id)
+        # Loading fluxes when running in flux mode
         data_file = "";
         if params['mi_options'] == "flux":
-            data_file = '/kb/module/data/BT_7bits.csv'
+            data_file = flux_path
         elif params['mi_options'] == "biomass":
-            data_file = '/kb/module/data/biomass.csv'
+            data_file = biomass_path
         elif params['mi_options'] == "secretion":
-            data_file = '/kb/module/data/secretion.csv'
-        #Running core mutual information function
-        mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file,params['mi_options'])
-        #Writing output report
-        output = MI_runner._generate_report(self.scratch, mutual_info, params)
+            data_file = secretion_path
+        # Running core mutual information function
+        mutual_info = MI_runner._generate_mutual_info(media_matrix, data_file, params['mi_options'])
+
+        # Writing output report
+        output = MI_runner._generate_report(self.scratch, mutual_info, params,[biomass_path,secretion_path,flux_path,full_secretion_path,full_flux_path])
         #END run_flux_mutual_information_analysis
 
         # At some point might do deeper type checking...

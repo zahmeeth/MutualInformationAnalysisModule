@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
 <style>
 body {font-family: "Lato", sans-serif;}
 
@@ -91,14 +92,11 @@ div.desc {
     text-align: center;
 }
 
-</style>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
-    <style>
-        .label-box {
-        margin-left: 50px
-        }
-    </style>
+.label-box {
+    margin-left: 50px
+}
+</style>
 </head>
 <body>
 
@@ -236,7 +234,7 @@ var layout = {
   },
   xaxis : { title : "Compound Combinations"},
   yaxis : { title : "Mutual Information (in Bits)"}
-
+  margin: {b:150, t:60}
 };
 
 var makeLabels = function(pdata) {
