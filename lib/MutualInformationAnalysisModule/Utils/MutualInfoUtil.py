@@ -247,6 +247,27 @@ class MutualInfoUtil:
 
 		return [biomass_path,secretion_path,flux_path,full_secretion_path,full_flux_path]
 
+	def _make_index_html(self, result_file_path, mutual_info_dict):
+		print(mutual_info_dict)
+		overview_content = ''
+		overview_content += '<table><tr><th>Mutual Information for various chemical compound combinations'
+		overview_content += ' Object</th></td>'
+		overview_content += '<tr><th>Input Chemical Compound Combination</th>'
+		overview_content += '<th>Mutual Information (in Bits)</th>'
+		overview_content += '</tr>'
+		for k, v in mutual_info_dict.items():
+			overview_content += '<tr><td>{}</td><td>{}</td></tr>'.format(k, v)
+		overview_content += '</table>'
+
+		with open(result_file_path, 'w') as result_file:
+			with open(os.path.join(os.path.dirname(__file__), 'report_template.html'),
+					  'r') as report_template_file:
+				report_template = report_template_file.read()
+				report_template = report_template.replace('<p>Overview_Content</p>',
+														  overview_content)
+				result_file.write(report_template)
+		return
+
 	def _generate_html_report(self, result_directory, mutual_info_dict):
 
 		"""
@@ -300,12 +321,15 @@ class MutualInfoUtil:
 		"""
 		print('-->I am here *************')
 		print(mutual_info_dict)
+		mutual_info_dict = mutual_info_dict[0]
 		uuidStr = str(uuid.uuid4())
 
 		output_directory = os.path.join(self.scratch, str(uuid.uuid4()))
-		# output_dir = os.path.join(result_directory, uuidStr)
 		self._mkdir_p(output_directory)
-		shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index.html'),
+		test_file = os.path.join(output_directory, "index.html")
+		# output_dir = os.path.join(result_directory, uuidStr)
+		self._make_index_html(test_file, mutual_info_dict)
+		shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index2.html'),
 					 output_directory)
 
 		# shutil.copy('/kb/module/data/index.html', result_directory + '/' + uuidStr + '/index.html')
