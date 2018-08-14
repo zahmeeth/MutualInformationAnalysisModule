@@ -315,8 +315,10 @@ class MutualInfoUtil:
 		# DataFileUtils to shock
 		print(output_directory)
 		print(os.listdir(output_directory))
-		report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												  'pack': 'targz'})['shock_id']
+		report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
+												  'pack': 'zip'})
+		report_shock_id = report_shock_result['shock_id']
+		print(report_shock_result)
 
 		report_file = {'name': 'index.html',
 					   'description': 'the report',
