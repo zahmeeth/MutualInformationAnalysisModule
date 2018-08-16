@@ -326,10 +326,10 @@ class MutualInfoUtil:
 		uuidStr = str(uuid.uuid4())
 		output_directory = os.path.join(self.scratch, str(uuid.uuid4()))
 		self._mkdir_p(output_directory)
-		test_file = os.path.join(output_directory, "index.html")
+		test_file = os.path.join(output_directory, "index2.html")
 		self._make_index_html(test_file, mutual_info_dict[1])
-		#shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index.html'),
-					# output_directory)
+		shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index.html'),
+					output_directory)
 
 		# shutil.copy('/kb/module/data/index.html', result_directory + '/' + uuidStr + '/index.html')
 		json.dump(mutual_info_dict[0], open(os.path.join(output_directory, 'pdata.json'), 'w'))
