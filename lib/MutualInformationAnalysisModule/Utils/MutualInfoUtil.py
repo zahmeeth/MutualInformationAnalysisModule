@@ -248,17 +248,16 @@ class MutualInfoUtil:
 		return [biomass_path,secretion_path,flux_path,full_secretion_path,full_flux_path]
 
 	def _make_index_html(self, result_file_path, mutual_info_dict):
-		print(mutual_info_dict)
 		overview_content = ''
 		overview_content += '<table><tr><th>Mutual Information for various chemical compound combinations'
 		overview_content += ' Object</th></td>'
 		overview_content += '<tr><th>Input Chemical Compound Combination</th>'
 		overview_content += '<th>Mutual Information (in Bits)</th>'
 		overview_content += '</tr>'
+
 		for k, v in mutual_info_dict.items():
 			overview_content += '<tr><td>{}</td><td>{}</td></tr>'.format(k, v)
 		overview_content += '</table>'
-
 		with open(result_file_path, 'w') as result_file:
 			with open(os.path.join(os.path.dirname(__file__), 'report_template.html'),
 					  'r') as report_template_file:
@@ -293,6 +292,7 @@ class MutualInfoUtil:
 		overview_content += '<tr><th>Input Chemical Compound Combination</th>'
 		overview_content += '<th>Mutual Information (in Bits)</th>'
 		overview_content += '</tr>'
+
 		for k, v in mutual_info_dict.items():
 			overview_content += '<tr><td>{}</td><td>{}</td></tr>'.format(k, v)
 		overview_content += '</table>'
@@ -305,8 +305,11 @@ class MutualInfoUtil:
 														  overview_content)
 				result_file.write(report_template)
 
+		#report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
+												  #'pack': 'zip'})['shock_id']
+
 		report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												  'pack': 'zip'})['shock_id']
+												  'pack': 'targz'})['shock_id']
 
 		html_report.append({'shock_id': report_shock_id,
 							'name': os.path.basename(result_file_path),
@@ -320,27 +323,25 @@ class MutualInfoUtil:
 		_generate_report: generate summary report
 		"""
 		print('-->I am here *************')
-		print(mutual_info_dict)
-		mutual_info_dict = mutual_info_dict[0]
 		uuidStr = str(uuid.uuid4())
-
 		output_directory = os.path.join(self.scratch, str(uuid.uuid4()))
 		self._mkdir_p(output_directory)
-		test_file = os.path.join(output_directory, "index2.html")
-		# output_dir = os.path.join(result_directory, uuidStr)
-		self._make_index_html(test_file, mutual_info_dict)
-		shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index.html'),
-					 output_directory)
+		test_file = os.path.join(output_directory, "index.html")
+		self._make_index_html(test_file, mutual_info_dict[1])
+		#shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index.html'),
+					# output_directory)
 
 		# shutil.copy('/kb/module/data/index.html', result_directory + '/' + uuidStr + '/index.html')
-		json.dump(mutual_info_dict, open(os.path.join(output_directory, 'pdata.json'), 'w'))
+		json.dump(mutual_info_dict[0], open(os.path.join(output_directory, 'pdata.json'), 'w'))
 		#shutil.copy('pdata.json', result_directory + '/' + uuidStr + '/pdata.json')
 
 		# DataFileUtils to shock
 		print(output_directory)
 		print(os.listdir(output_directory))
+		#report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
+												 # 'pack': 'zip'})
 		report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
-												  'pack': 'zip'})
+													  'pack': 'targz'})
 		report_shock_id = report_shock_result['shock_id']
 		print(report_shock_result)
 
@@ -385,6 +386,8 @@ class MutualInfoUtil:
 		report_output = {'report_name': output['name'], 'report_ref': output['ref']}
 
 		return report_output
+
+######### @@@@@@@ALL THREE MUTUAL INFORMATION CALCULATION START FROM HERE@@@@@@@#############
 
 	def _generate_mutual_info(self, media_matrix, fba_file, mi_options):
 
@@ -444,7 +447,7 @@ class MutualInfoUtil:
 		#print(Temp1_df2)
 		cols = Temp1_df2.columns
 		for i in range(0,len(cols)):
-			Temp1_df2.loc[Temp1_df2[cols[i]] == 1 , cols[i]] = cols[i]
+			Temp1_df2.loc[Temp1_df2[cols[i]] == 1, cols[i]] = cols[i]
 		#print('-->*************OK')
 		#print (Temp1_df2)
 
@@ -537,7 +540,7 @@ class MutualInfoUtil:
 					drop_columns_df = drop_rows_df.T.drop_duplicates(keep="first").T
 					remove = []
 					removed = {}
-					count_values = []
+					count_values = {}
 					cols = df[1][k].columns
 					for i in range(len(cols)-1):
 						duplicated = []
@@ -627,7 +630,7 @@ class MutualInfoUtil:
 
 				#print (pdata)
 				#json.dump(pdata, open(self.scratch+'/pdata.json', 'w'))
-				return pdata
+				return [pdata,MI_dict]
 				#return MI_dict
 
 ######### INPUT COMPONENTS AND BIOMASS FLUX MUTUAL INFORMATION CALCULATION #############
@@ -759,7 +762,7 @@ class MutualInfoUtil:
 					record["names"] = names[i]
 					record["Comp_Mapping"] = Comp_Mapping
 					pdata.append(record)
-				return pdata
+				return [pdata,MI_dict_biomass]
 
 ######### INPUT COMPONENTS AND BIOMASS, SECRETION FLUX MUTUAL INFORMATION CALCULATION #############
 
