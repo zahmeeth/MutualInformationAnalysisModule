@@ -68,7 +68,8 @@ class MutualInfoUtil:
 		report_shock_id = self.dfu.file_to_shock(
 			{
 				'file_path': output_directory,
-				'pack': 'targz'
+				'pack': 'zip'
+				#'pack': 'targz'
 			})
 		print(report_shock_id)
 		return
@@ -305,11 +306,11 @@ class MutualInfoUtil:
 														  overview_content)
 				result_file.write(report_template)
 
-		#report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												  #'pack': 'zip'})['shock_id']
-
 		report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												  'pack': 'targz'})['shock_id']
+												  'pack': 'zip'})['shock_id']
+
+		#report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
+												 # 'pack': 'targz'})['shock_id']
 
 		html_report.append({'shock_id': report_shock_id,
 							'name': os.path.basename(result_file_path),
@@ -338,37 +339,16 @@ class MutualInfoUtil:
 		# DataFileUtils to shock
 		print(output_directory)
 		print(os.listdir(output_directory))
-		#report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
-												 # 'pack': 'zip'})
 		report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
-													  'pack': 'targz'})
+												 'pack': 'zip'})
+		#report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
+												#	  'pack': 'targz'})
 		report_shock_id = report_shock_result['shock_id']
 		print(report_shock_result)
 
 		report_file = {'name': 'index.html',
 					   'description': 'the report',
 					   'shock_id': report_shock_id}
-
-		#biomass_file = {'name': 'biomass_file.csv',
-		#			   'description': 'biomass_file',
-		#			   'path': paths[0]}
-
-		#flux_file = {'name': 'flux_file.csv',
-		#			   'description': 'flux_file',
-		#			   'path': paths[2]}
-
-		#full_flux_file = {'name': 'full_flux_file.csv',
-		#			   'description': 'full_flux_file',
-		#			   'path': paths[4]}
-
-		#secretion_file = {'name': 'secretion_file.csv',
-		#			   'description': 'secretion_file',
-		#			   'path': paths[1]}
-
-		#full_secretion_file = {'name': 'full_secretion_file.csv',
-		#			   'description': 'full_secretion_file',
-		#			   'path': paths[3]}
-
 		log('creating report')
 		#output_html_files = self._generate_html_report(result_directory,
 		#											   mutual_info_dict)
