@@ -69,6 +69,7 @@ class MutualInfoUtil:
 			{
 				'file_path': output_directory,
 				'pack': 'zip'
+				#'pack': 'targz'
 			})
 		print(report_shock_id)
 		return
@@ -305,11 +306,11 @@ class MutualInfoUtil:
 														  overview_content)
 				result_file.write(report_template)
 
-		#report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												  #'pack': 'zip'})['shock_id']
-
 		report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												  'pack': 'targz'})['shock_id']
+												  'pack': 'zip'})['shock_id']
+
+		#report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
+												 # 'pack': 'targz'})['shock_id']
 
 		html_report.append({'shock_id': report_shock_id,
 							'name': os.path.basename(result_file_path),
@@ -337,10 +338,9 @@ class MutualInfoUtil:
 		# DataFileUtils to shock
 		print(output_directory)
 		print(os.listdir(output_directory))
-		#report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
-												 # 'pack': 'zip'})
 		report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
 													  'pack': 'zip'})
+
 		report_shock_id = report_shock_result['shock_id']
 		print(report_shock_result)
 
