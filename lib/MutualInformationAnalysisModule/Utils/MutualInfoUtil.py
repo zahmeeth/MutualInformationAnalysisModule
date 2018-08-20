@@ -68,7 +68,7 @@ class MutualInfoUtil:
 		report_shock_id = self.dfu.file_to_shock(
 			{
 				'file_path': output_directory,
-				'pack': 'targz'
+				'pack': 'zip'
 			})
 		print(report_shock_id)
 		return
@@ -326,10 +326,9 @@ class MutualInfoUtil:
 		uuidStr = str(uuid.uuid4())
 		output_directory = os.path.join(self.scratch, str(uuid.uuid4()))
 		self._mkdir_p(output_directory)
-		test_file = os.path.join(output_directory, "index2.html")
+		test_file = os.path.join(output_directory, "index.html")
 		self._make_index_html(test_file, mutual_info_dict[1])
-		shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index.html'),
-					output_directory)
+		#shutil.copy2(os.path.join(os.path.dirname(__file__), 'data', 'index.html'), output_directory)
 
 		# shutil.copy('/kb/module/data/index.html', result_directory + '/' + uuidStr + '/index.html')
 		json.dump(mutual_info_dict[0], open(os.path.join(output_directory, 'pdata.json'), 'w'))
@@ -341,34 +340,13 @@ class MutualInfoUtil:
 		#report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
 												 # 'pack': 'zip'})
 		report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
-													  'pack': 'targz'})
+													  'pack': 'zip'})
 		report_shock_id = report_shock_result['shock_id']
 		print(report_shock_result)
 
 		report_file = {'name': 'index.html',
 					   'description': 'the report',
 					   'shock_id': report_shock_id}
-
-		#biomass_file = {'name': 'biomass_file.csv',
-		#			   'description': 'biomass_file',
-		#			   'path': paths[0]}
-
-		#flux_file = {'name': 'flux_file.csv',
-		#			   'description': 'flux_file',
-		#			   'path': paths[2]}
-
-		#full_flux_file = {'name': 'full_flux_file.csv',
-		#			   'description': 'full_flux_file',
-		#			   'path': paths[4]}
-
-		#secretion_file = {'name': 'secretion_file.csv',
-		#			   'description': 'secretion_file',
-		#			   'path': paths[1]}
-
-		#full_secretion_file = {'name': 'full_secretion_file.csv',
-		#			   'description': 'full_secretion_file',
-		#			   'path': paths[3]}
-
 		log('creating report')
 		#output_html_files = self._generate_html_report(result_directory,
 		#											   mutual_info_dict)
