@@ -98,7 +98,7 @@ class MutualInformationAnalysisModule:
         [biomass_path, secretion_path, flux_path, full_secretion_path, full_flux_path] = MI_runner._run_fba(workspace_name, media_id_list, fbamodel_id, myuuid, media_id)
         # Loading fluxes when running in flux mode
         # Running core mutual information function
-        mutual_info = MI_runner._generate_mutual_info(media_matrix, [flux_path,biomass_path,secretion_path], params['mi_options'])
+        mutual_info = MI_runner._generate_mutual_info(media_matrix, [flux_path,biomass_path,full_secretion_path], params['mi_options'])
 
         # Writing output report
         output = MI_runner._generate_report(self.scratch, mutual_info, workspace_name)

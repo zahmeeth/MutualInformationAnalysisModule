@@ -88,7 +88,7 @@ class MutualInformationAnalysisModuleTest(unittest.TestCase):
         # self.assertEqual(ret[...], ...) or other unittest methods
 
         params = {'fbamodel_id': "iYL1228", 'compounds': '12dag3p_c0,12dgr_c0,13dpg_c0,cpd00027_c0',
-                  'media_id': "MR1_Minimal_Media", 'workspace_name': 'zahmeeth:narrative_1496764271337', 'mi_options': 'biomass'}
+                  'media_id': "MR1_Minimal_Media", 'workspace_name': 'zahmeeth:narrative_1496764271337', 'mi_options': 'secretion'}
         #params = {'fbamodel_id': "meh", 'compounds': "foo", 'media_id': "bar", 'workspace_name': self.getWsName()}
 
         print('test methd!')

@@ -69,7 +69,6 @@ class MutualInfoUtil:
 			{
 				'file_path': output_directory,
 				'pack': 'zip'
-				#'pack': 'targz'
 			})
 		print(report_shock_id)
 		return
@@ -745,151 +744,153 @@ class MutualInfoUtil:
 ######### INPUT COMPONENTS AND BIOMASS, SECRETION FLUX MUTUAL INFORMATION CALCULATION #############
 
 		if mi_options == "secretion":
-			"""
-            #Load the file contain the information of FBAs(media) along with corresponding Biomass (growth)
-            #print('secretion flux')
-            #df4 = pd.read_csv(fba_file[2])
-            #df4.values
-            #print(df4)
-            #df_biomass = pd.read_csv(fba_file[1])
-            #df_biomass.values
-            #print(df_biomass)
+				#Load the file contain the information of FBAs(media) along with corresponding Biomass (growth)
+				print('secretion flux')
+				df4 = pd.read_csv(fba_file[2], header=0, index_col=0)
 
-            MI_dict_b_u_s = {}
-            for r in range(0, len(df[0])):
+				df4.index.name = 'FBAs'
+				df4 = df4.T
 
-                reaction_states = df[1][r]
+				dfbiomass = pd.read_csv(fba_file[1])
+				aa = dfbiomass['Biomass'].values.tolist()
+				# print(len(aa))
+				df4['Biomass'] = aa
+				# print(df4.shape)
+				compoundslist_b_u_s = list(df4.columns.values)
+				#print(compoundslist_b_u_s)
 
-                def get_groups(flux_df):
-                    groups = collections.defaultdict(list)
-                    unique = flux_df.aggregate(lambda x: hash(str(x.values)))
-                    for k, v in unique[0:].iteritems():
-                        groups[v].append(k)
-                    return dict([(i, g) for i, g in enumerate(groups.values())])
+				MI_dict_b_u_s = {}
+				for r in range(0, len(df[0])):
+					reaction_states = df[1][r].head(1000)
 
-                n_group = collections.defaultdict(int)
-                groups = get_groups(reaction_states)
-                for group in groups.values():
-                    n_group[len(group)] += 1
-                # print n_group
-                # print groups
+					def get_groups(flux_df):
+						groups = collections.defaultdict(list)
+						unique = flux_df.aggregate(lambda x: hash(str(x.values)))
+						for k, v in unique[0:].iteritems():
+							groups[v].append(k)
+						return dict([(i, g) for i, g in enumerate(groups.values())])
 
-                groups_count = {}
-                for key, values in groups.items():
-                    groups_count[key] = len(values)
-                # print groups_count
+					n_group = collections.defaultdict(int)
+					groups = get_groups(reaction_states)
+					for group in groups.values():
+						n_group[len(group)] += 1
+					#print(n_group)
+					#print(groups)
 
-                # Take first FBA label of every group
-                group_id = {}
-                for k, v in groups.items():
-                    group_id.update({k: groups.values()[k][0]})
+					groups_count = {}
+					for key, values in groups.items():
+						groups_count[key] = len(values)
+					# print(groups_count)
 
-                # Obtain the Biomass of each Group
-                cols_df = group_id.values()
-                cols_df4 = df4.columns
-                # print cols_df
+					# Take first FBA label of every group
+					group_id = {}
+					for k, v in groups.items():
+						group_id.update({k: groups.values()[k][0]})
 
-                # Dictionary of first FBA label of every group and its corresponding number of members
-                groups_label_count = {}
-                for k, v in groups_count.items():
-                    groups_label_count.update({cols_df[k]: v})
-                print(groups_label_count)
+					# Obtain the Biomass of each Group
+					cols_df = group_id.values()
+					cols_df4 = df4.columns
 
-                # Extract FBA Groups biomass inside df4
-                Groups_Biomass = df4[df4['FBAs'].isin(cols_df)].reset_index(drop=True)
-                # print cols_df
-                # print Groups_Biomass
+					# Dictionary of first FBA label of every group and its corresponding number of members
+					groups_label_count = {}
+					for k, v in groups_count.items():
+						groups_label_count.update({cols_df[k]: v})
 
-                # Regroup based on the biomass values
-                re_group = Groups_Biomass.groupby(
-                    ['cpd00254_e0', 'cpd00067_e0', 'cpd00205_e0', 'cpd00034_e0', 'cpd00009_e0', 'cpd00013_e0',
-                     'cpd10515_e0', 'cpd00099_e0', 'cpd00030_e0', 'cpd00012_e0', 'cpd00048_e0', 'cpd00149_e0',
-                     'cpd00073_e0', 'cpd10516_e0', 'cpd00001_e0', 'cpd00011_e0', 'cpd00007_e0', 'cpd11416_c0',
-                     'cpd00058_e0', 'cpd00084_e0', 'cpd00063_e0', 'cpd00027_e0', 'cpd00029_e0', 'cpd00028_e0',
-                     'Biomass'])
+					#print(groups_label_count)
 
-                my_list = []
-                for index, values in re_group:
-                    my_list.append(values['FBAs'].values)
+					# Extract FBA Groups biomass inside df4
+					df5 = df4.reset_index()
+					Groups_Biomass = df5[df5['index'].isin(cols_df)]
+					#print(Groups_Biomass)
 
-                B_U_S_dict = {}
-                for media in my_list:
-                    if len(media) > 1:
-                        media_cond = 0
-                        for i in (0, len(media) - 1):
-                            media_cond += groups_label_count[media[i]]
-                        B_U_S_dict.update({str(media)[1:-1]: media_cond})
-                    # final_my_dict.update({tuple(media.tolist()):media_cond})
-                    else:
-                        B_U_S_dict.update(
-                            {str(media)[1:-1]: groups_label_count[str(tuple(media.tolist()))[1:-1][:-1][1:-1]]})
-                B_U_S_dict = {eval(k): v for k, v in B_U_S_dict.iteritems()}
-                print(B_U_S_dict)
-                Summery = pd.DataFrame(B_U_S_dict.items(), columns=['FBAs_x', 'FBAs_y'])
+					# Regroup based on the biomass values
+					re_group = Groups_Biomass.groupby(compoundslist_b_u_s)
+					#print(re_group)
 
-                Data_4_CondMI = Summery.groupby('FBAs_y').count()
-                Data_4_CondMI = Data_4_CondMI.to_dict(orient='dict')
+					my_list = []
+					for index,values in re_group:
+						my_list.append(values['index'].values)
 
-                print(Data_4_CondMI)
+					#print(my_list)
 
-                for k, v in Data_4_CondMI.items():
-                    Data_4_CondMI = v
+					B_U_S_dict = {}
+					for media in my_list:
+						if len(media) > 1:
+							media_cond = 0
+							for i in (0, len(media) - 1):
+								media_cond += groups_label_count[media[i]]
+							B_U_S_dict.update({str(media)[1:-1]: media_cond})
+							#final_my_dict.update({tuple(media.tolist()):media_cond})
+						else:
+							B_U_S_dict.update(
+								{str(media)[1:-1]: groups_label_count[str(tuple(media.tolist()))[1:-1][:-1][1:-1]]})
 
-                Num_of_FBAs = Data_4_CondMI.keys()
-                Count_Num_of_FBAs = Data_4_CondMI.values()
-                print(Num_of_FBAs)
-                print(Count_Num_of_FBAs)
+					B_U_S_dict = {k:v for k,v in B_U_S_dict.iteritems()}
+					#print(B_U_S_dict)
 
-                # -------Mutual Inforamtion (MI) calculation Stage II (input compounds respect to Biomass, Uptake and Secretion-------------
-                # Pure Entropy
-                FBAs = len(df[1][r].columns)
-                pure_entropy = math.log(FBAs, 2)
+					Summery = pd.DataFrame(B_U_S_dict.items(), columns=['index_x', 'index_y'])
 
-                conditional_entropy = 0.0
-                for l in range(0, len(Count_Num_of_FBAs)):
-                    temp = -1 * Count_Num_of_FBAs[l] * (Num_of_FBAs[l] / float(FBAs)) * Num_of_FBAs[l] * (
-                        1.0 / float(Num_of_FBAs[l]) * (math.log(1.0 / float(Num_of_FBAs[l]), 2)))
-                    conditional_entropy += temp
+					Data_4_CondMI = Summery.groupby('index_y').count()
+					Data_4_CondMI = Data_4_CondMI.to_dict(orient='dict')
 
-                Mutual_Info_B_U_S = pure_entropy - conditional_entropy
-                # print('Mutaul Info:', Mutual_Info_B_U_S)
+					#print(Data_4_CondMI)
+					for k, v in Data_4_CondMI.items():
+						Data_4_CondMI = v
 
-                MI_dict_b_u_s.update({df[0][r]: Mutual_Info_B_U_S})
+					Num_of_FBAs = Data_4_CondMI.keys()
+					Count_Num_of_FBAs = Data_4_CondMI.values()
+					#print(Num_of_FBAs)
+					#print(Count_Num_of_FBAs)
+					#print('-->***<---')
 
-            # Sorted MI_dict_biomass
-            MI_dict_b_u_s = sorted(MI_dict_b_u_s.items(), key=lambda x: (-len(x[0]), x[0]))
-            MI_dict_b_u_s = OrderedDict(MI_dict_b_u_s)
 
-            print(MI_dict_b_u_s)
+					# -------Mutual Inforamtion (MI) calculation Stage II (input compounds respect to Biomass, Uptake and Secretion-------------
+					# Pure Entropy
+					FBAs = len(df[1][r].columns)
+					pure_entropy = math.log(FBAs, 2)
 
-            x_groups = [[] for x in range(num_compounds)]
-            y_groups = [[] for x in range(num_compounds)]
-            names = [[] for x in range(num_compounds)]
-            Comp_Mapping = [[] for x in range(num_compounds)]
+					conditional_entropy = 0.0
+					for l in range(0, len(Count_Num_of_FBAs)):
+						temp = -1 * Count_Num_of_FBAs[l] * (Num_of_FBAs[l] / float(FBAs)) * Num_of_FBAs[l] * (
+							1.0 / float(Num_of_FBAs[l]) * (math.log(1.0 / float(Num_of_FBAs[l]), 2)))
+						conditional_entropy += temp
 
-            for key, val in MI_dict_b_u_s.iteritems():
-                del_count = key.count(',')
-                x_groups[del_count].append(key)
-                y_groups[del_count].append(val)
+					Mutual_Info_B_U_S = pure_entropy - conditional_entropy
+					# print('Mutaul Info:', Mutual_Info_B_U_S)
 
-            # for x, y in zip(x_groups, y_groups):
-            # data.append(go.Bar(x=x, y=y, name='test'))
+					MI_dict_b_u_s.update({df[0][r]: Mutual_Info_B_U_S})
 
-            compound_IDs = ['H2', 'Vitamin K', 'Hematin', 'Glucose', 'Acetate', 'Formate', 'B12']
+				# Sorted MI_dict_biomass
+				MI_dict_b_u_s = sorted(MI_dict_b_u_s.items(), key=lambda x: (-len(x[0]), x[0]))
+				MI_dict_b_u_s = OrderedDict(MI_dict_b_u_s)
 
-            pdata = []
-            for i in range(0, len(x_groups)):
-                names[i] = str(i + 1) + ' Compound Combination'
-                Comp_Mapping = str(i + 1) + '-' + compound_IDs[i]
+				#print(MI_dict_b_u_s)
 
-                record = {}
-                record["x"] = []
-                for e in x_groups[i]:
-                    record["x"].append("c" + e)
-                record["y"] = y_groups[i]
-                record["names"] = names[i]
-                record["Comp_Mapping"] = Comp_Mapping
-                pdata.append(record)
+				x_groups = [[] for x in range(num_compounds)]
+				y_groups = [[] for x in range(num_compounds)]
+				names = [[] for x in range(num_compounds)]
+				Comp_Mapping = [[] for x in range(num_compounds)]
 
-            print(pdata)
-"""
+				for key, val in MI_dict_b_u_s.iteritems():
+					del_count = key.count(',')
+					x_groups[del_count].append(key)
+					y_groups[del_count].append(val)
+
+				# for x, y in zip(x_groups, y_groups):
+				# data.append(go.Bar(x=x, y=y, name='test'))
+
+				pdata = []
+				for i in range(0, len(x_groups)):
+					names[i] = str(i + 1) + ' Compound Combination'
+					Comp_Mapping = str(i + 1) + '-' + compoundslist[i]
+
+					record = {}
+					record["x"] = []
+					for e in x_groups[i]:
+						record["x"].append("c" + e)
+					record["y"] = y_groups[i]
+					record["names"] = names[i]
+					record["Comp_Mapping"] = Comp_Mapping
+					pdata.append(record)
+
+				return [pdata, MI_dict_b_u_s]
