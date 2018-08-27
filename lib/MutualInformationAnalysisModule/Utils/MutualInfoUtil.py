@@ -309,7 +309,7 @@ class MutualInfoUtil:
 												  'pack': 'zip'})['shock_id']
 
 		#report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												 # 'pack': 'targz'})['shock_id']
+												 # 'pack': 'zip'})['shock_id']
 
 		html_report.append({'shock_id': report_shock_id,
 							'name': os.path.basename(result_file_path),

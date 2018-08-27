@@ -3,7 +3,10 @@ subtitle : none
 tooltip  : Explore the mutual information between model flux and media inputs
 
 screenshots :
-    []
+    - App_desription_1.pdf
+    - App_desription_2.pdf
+
+icon: MI_App_V0.png
 
 method-suggestions :
     related :
