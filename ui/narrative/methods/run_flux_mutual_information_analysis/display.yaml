@@ -3,8 +3,8 @@ subtitle : none
 tooltip  : Explore the mutual information between model flux and media inputs
 
 screenshots :
-    - App_desription_1.pdf
-    - App_desription_2.pdf
+    - App_desription_1.png
+    - App_desription_2.png
 
 icon: MI_App_V0.png
 
@@ -38,6 +38,6 @@ parameters :
 description : none
 
 description : |
-    <p>Zahmeeth will write a better description later, with links to her publications</p>
+    <p> Goal: This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information [in bits] flow through the metabolic network. </p>
     
 technical-description : none
