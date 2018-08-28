@@ -39,7 +39,7 @@ parameters :
 
 
 description : |
-    <p> (1)	Goal This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
+    <p> Goal This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
     <p> we demonstrate that this study can lead to a ranking of chemical compounds on the basis of how much mutual information through the through the metabolic network can result from their variation. This can potentially lead to the reduction in the number of expensive experiments by reducing the different combinations of chemical compounds necessary to obtain and study determinate metabolic behaviors of these organisms, which might be associated with dysbiosis. </p>
     <p> Begin by selecting the metabolic FBA model of an organism that you want to perform the Run Flux Mutual Information Analysis upon. Then specify the base media on which you will grow your organism. </p>
 
@@ -48,15 +48,4 @@ publications :
     -
         display-text: |
 
-        Pierobon, M. et al. ”Mutual information upper bound of molecular communication based on cell metabolism.”, In Signal Processing Advances in Wireless Communications (SPAWC), 2016 IEEE 17th International Workshop on, pp. 1-6. IEEE, 2016. Preprint at IEEE Xplore DL,
-        link: https://ieeexplore.ieee.org/document/7536835/ (2016). DOI: 10.1109/SPAWC.2016.7536835.
-    -
-        display-text: |
-
-        Zahmeeth, S.S. et al. ”End-to-end molecular communication channels in cell metabolism an information theoretic study.", In Proceedings of the 4th ACM International Conference on Nanoscale Computing and Communication, p. 21. ACM, 2017. Preprint at ACM DL,
-        link: https://dl.acm.org/citation.cfm?id=3109474 (2016). DOI: 10.1145/3109453.3109474.
-    -
-        display-text: |
-        Zahmeeth, S.S. et al. "Characterization of Molecular Communication Based on Cell Metabolism Through Mutual Information and Flux Balance Analysis.", Master's thesis 2016 Dec. Preprint at DigitalCommons@University of Nebraska - Lincoln,
-        link: https://digitalcommons.unl.edu/computerscidiss/114/ (2016).
-
+        Pierobon, M. et al. Mutual information upper bound of molecular communication based on cell metabolism,  In Signal Processing Advances in Wireless Communications (SPAWC), 2016 IEEE 17th International Workshop on, pp. 1-6. IEEE, 2016. Preprint at IEEE Xplore DL,
