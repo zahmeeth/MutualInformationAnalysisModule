@@ -1,6 +1,6 @@
 name     : Run Flux Mutual Information Analysis
 subtitle : none
-tooltip  : |
+tooltip  : 
 Explore the mutual information between model flux and media inputs
 
 screenshots:
