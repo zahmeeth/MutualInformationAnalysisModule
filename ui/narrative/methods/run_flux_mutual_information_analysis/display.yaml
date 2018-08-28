@@ -41,8 +41,3 @@ parameters :
 description : |
     <p> Goal This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network </p>
 
-publications :
-    -
-        display-text: |
-
-        Pierobon, M. et al. Mutual information upper bound of molecular communication based on cell metabolism,  In Signal Processing Advances in Wireless Communications SPAWC, 2016 IEEE 17th International Workshop on, pp. 1-6. IEEE, 2016. Preprint at
