@@ -39,13 +39,10 @@ parameters :
 
 
 description : |
-    <p> Goal This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
-    <p> we demonstrate that this study can lead to a ranking of chemical compounds on the basis of how much mutual information through the through the metabolic network can result from their variation. This can potentially lead to the reduction in the number of expensive experiments by reducing the different combinations of chemical compounds necessary to obtain and study determinate metabolic behaviors of these organisms, which might be associated with dysbiosis. </p>
-    <p> Begin by selecting the metabolic FBA model of an organism that you want to perform the Run Flux Mutual Information Analysis upon. Then specify the base media on which you will grow your organism. </p>
-
+    <p> Goal This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network </p>
 
 publications :
     -
         display-text: |
 
-        Pierobon, M. et al. Mutual information upper bound of molecular communication based on cell metabolism,  In Signal Processing Advances in Wireless Communications (SPAWC), 2016 IEEE 17th International Workshop on, pp. 1-6. IEEE, 2016. Preprint at IEEE Xplore DL,
+        Pierobon, M. et al. Mutual information upper bound of molecular communication based on cell metabolism,  In Signal Processing Advances in Wireless Communications SPAWC, 2016 IEEE 17th International Workshop on, pp. 1-6. IEEE, 2016. Preprint at
