@@ -1,5 +1,5 @@
 name     : Run Flux Mutual Information Analysis
-#subtitle : none
+subtitle : Explore the mutual information between model flux and media inputs.
 tooltip  : |
     Explore the mutual information between model flux and media inputs.
 
