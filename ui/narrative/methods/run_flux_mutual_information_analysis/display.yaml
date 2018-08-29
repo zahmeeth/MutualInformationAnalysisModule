@@ -1,8 +1,12 @@
 name     : Run Flux Mutual Information Analysis
-subtitle : none
-tooltip  : Explore the mutual information between model flux and media inputs
+#subtitle : none
+tooltip  : |
+    Explore the mutual information between model flux and media inputs.
 
-screenshots:
+#tooltip  : Explore the mutual information between model flux and media inputs
+
+
+screenshots :
 
     - App_desription1.png
     - App_desription2.png
@@ -17,27 +21,39 @@ method-suggestions :
 
 parameters :
     fbamodel_id :
-        ui-name : FBA model
-        short-hint : Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
-        long-hint  : Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
+        ui-name : |
+            FBA model
+        short-hint : |
+            Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
+        long-hint  :  |
+            Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
 
     media_id :
-        ui-name : Base media
-        short-hint : Select a base media to which all selected compound combinations will be added
-        long-hint  : Select a base media to which all selected compound combinations will be added
+        ui-name :
+          Base media
+        short-hint : |
+          Select a base media to which all selected compound combinations will be added
+        long-hint  : |
+          Select a base media to which all selected compound combinations will be added
 
     compounds :
-        ui-name : Compounds to analyze
-        short-hint : Select the list of compounds to compute mutual information analysis with model flux
-        long-hint  : Select the list of compounds to compute mutual information analysis with model flux
+        ui-name : |
+          Compounds to analyze
+        short-hint :  |
+          Select the list of compounds to compute mutual information analysis with model flux
+        long-hint  :  |
+          Select the list of compounds to compute mutual information analysis with model flux
         
     mi_options :
-        ui-name : Mode of operation
-        short-hint : Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
-        long-hint  : Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
+        ui-name : |
+          Mode of operation
+        short-hint :  |
+          Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
+        long-hint  :  |
+          Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
 
 
 
 description : |
-    <p> Goal This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network </p>
+    <p> Goal This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
 
