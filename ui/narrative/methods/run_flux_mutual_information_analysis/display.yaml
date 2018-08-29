@@ -1,7 +1,14 @@
+#
+# Define basic display information
+#
+
 name     : Run Flux Mutual Information Analysis
-subtitle : Explore the mutual information between model flux and media inputs.
+
 tooltip  : |
     Explore the mutual information between model flux and media inputs.
+
+#subtitle : Explore the mutual information between model flux and media inputs.
+
 
 #tooltip  : Explore the mutual information between model flux and media inputs
 
