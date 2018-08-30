@@ -5,7 +5,7 @@
 name     : Run Flux Mutual Information Analysis
 
 tooltip  : |
-    Explore the mutual information between model flux and media inputs.
+    Explore the mutual information between model flux and media inputs
 
 #subtitle : Explore the mutual information between model flux and media inputs.
 
@@ -60,12 +60,10 @@ parameters :
           Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
 
 description : |
-    <p> Goal:This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
+    <p> Goal: This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
     <p> We demonstrate that this study can lead to a ranking of chemical compounds on the basis of how much mutual information through the through the metabolic network can result from their variation. </p>
     <p> This can potentially lead to the reduction in the number of expensive experiments by reducing the different combinations of chemical compounds necessary to obtain and study determinate metabolic behaviors of these organisms, which might be associated with dysbiosis. </p>
-    <p> Begin by selecting the metabolic FBA model of an organism that you want to perform the Run Flux Mutual Information Analysis upon. </p>
-    <p> Then specify the base media on which you will grow your organism. </p>
-    <p> Finally, select the mode of operation such as mutual information from intracellular flux values; biomass production; or section, uptake, and biomass production
+    <p> Begin by selecting the metabolic FBA model of an organism that you want to perform the Run Flux Mutual Information Analysis upon. Then specify the base media on which you will grow your organism. Finally, select the mode of operation such as mutual information from intracellular flux values; biomass production; or section, uptake, and biomass production
 
     <p><strong> Team members who developed & deployed the mathematical models & deployed algorithms in KBase: </strong>
     Zahmeeth Sakkaff, Massimilliano Pierobon and Chris Henry, For questions, <a href="http://kbase.us/contact-us/">contact us</a>.</p>
@@ -75,11 +73,11 @@ description : |
 publications :
     -
         display-text: |
-            [1] Pierobon, M. et al. ”Mutual information upper bound of molecular communication based on cell metabolism.”, In Signal Processing Advances in Wireless Communications (SPAWC), 2016 IEEE 17th International Workshop on, pp. 1-6. IEEE, 2016. Preprint at IEEE Xplore DL
+            [1] Pierobon, M. et al. ”Mutual information upper bound of molecular communication based on cell metabolism.”, In Signal Processing Advances in Wireless Communications (SPAWC), 2016 IEEE 17th International Workshop on, pp. 1-6. IEEE, 2016. Preprint at IEEE Xplore DL.
         link: https://ieeexplore.ieee.org/document/7536835/
     -
         display-text: |
-            [2] Overbeek R, Olson R, Pusch GD, Olsen GJ, Davis JJ, et al. (2014) The SEED and the Rapid Annotation of microbial genomes using Subsystems Technology (RAST). Nucleic Acids Res 42: D206-D214. doi:10.1093/nar/gkt1226.
+            [2] Zahmeeth, S.S. et al. "End-to-end molecular communication channels in cell metabolism: an information theoretic study", In Proceedings of the 4th ACM International Conference on Nanoscale Computing and Communication, p. 21. ACM, 2017. Preprint at ACM DL.
         link: https://dl.acm.org/citation.cfm?id=3109474
     -
         display-text: |
