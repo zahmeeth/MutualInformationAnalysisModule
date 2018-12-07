@@ -59,6 +59,14 @@ parameters :
         long-hint  :  |
           Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
 
+    max_c_uptake :
+        ui-name : |
+          Maximum carbon uptake
+        short-hint :  |
+          The amount of maximum carbon flux utilized
+        long-hint  :  |
+          The amount of maximum carbon flux utilized
+
 description : |
     <p> Goal: This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
     <p> We demonstrate that this study can lead to a ranking of chemical compounds on the basis of how much mutual information through the through the metabolic network can result from their variation. </p>

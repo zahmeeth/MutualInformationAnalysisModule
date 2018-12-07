@@ -68,7 +68,7 @@ class MutualInfoUtil:
 		report_shock_id = self.dfu.file_to_shock(
 			{
 				'file_path': output_directory,
-				'pack': 'zip'
+				'pack': 'targz'
 			})
 		print(report_shock_id)
 		return
@@ -155,14 +155,14 @@ class MutualInfoUtil:
 
 
 		fba_tool_obj.run_flux_balance_analysis({
-			"max_c_uptake" : 6,
-			"workspace" : workspace_name,
-			"fbamodel_id" : fbamodel_id,
-			"fba_output_id" : fbamodel_id + ".mifba",
+			"max_c_uptake": 60, #"max_c_uptake": 6, // previously default is 6 later set to 60
+			"workspace": workspace_name,
+			"fbamodel_id": fbamodel_id,
+			"fba_output_id": fbamodel_id + ".mifba",
 			"fbamodel_workspace" : workspace_name,
-			"media_id_list" : new_media_list,
-			"target_reaction" : "bio1",
-			"minimize_flux" : 1
+			"media_id_list": new_media_list,
+			"target_reaction": "bio1",
+			"minimize_flux": 1
 			})
 		output = self.ws.get_objects2({
 			'objects' : [{
@@ -306,7 +306,7 @@ class MutualInfoUtil:
 				result_file.write(report_template)
 
 		report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
-												  'pack': 'zip'})['shock_id']
+												  'pack': 'targz'})['shock_id']
 
 		#report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
 												 # 'pack': 'zip'})['shock_id']
@@ -338,7 +338,7 @@ class MutualInfoUtil:
 		print(output_directory)
 		print(os.listdir(output_directory))
 		report_shock_result = self.dfu.file_to_shock({'file_path': output_directory,
-													  'pack': 'zip'})
+													  'pack': 'targz'})
 
 		report_shock_id = report_shock_result['shock_id']
 		print(report_shock_result)
@@ -375,10 +375,10 @@ class MutualInfoUtil:
 
 		#df1.as_matrix()
 		#print('-->printing df1')# **** rm
-		#print(df1.to_string()) # **** rm
+		#print(df1.to_string())# **** rm
 		#print(type(df1))  # **** rm
 		#print('-->printing media_matrix')
-		# print(media_matrix)
+		#print(media_matrix)
 
 		df3= pd.DataFrame(columns=media_matrix[0][1:])
 		for i in range(1, len(media_matrix)):

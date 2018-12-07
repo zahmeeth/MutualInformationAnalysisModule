@@ -103,6 +103,18 @@
          "text_options" : {
             "valid_ws_types" : []
          }
+      },
+      {
+        "id": "max_c_uptake",
+        "optional": false,
+        "advanced": false,
+        "allow_multiple": false,
+        "default_values": "60",
+        "field_type": "text",
+        "text_options": {
+          "validate_as": "int",
+          "max_int": 60
+        }
       }
     ],
   "behavior" : {
@@ -130,6 +142,10 @@
               {
                   "narrative_system_variable": "workspace",
                   "target_property": "workspace_name"
+              },
+              {
+               "input_parameter": "max_c_uptake",
+               "target_property": "max_c_uptake"
               }
     ],
     "output_mapping" : [

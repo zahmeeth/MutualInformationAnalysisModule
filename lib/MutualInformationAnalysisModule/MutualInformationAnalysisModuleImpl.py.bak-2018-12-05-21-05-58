@@ -74,6 +74,8 @@ class MutualInformationAnalysisModule:
         media_id = params.get('media_id')
         workspace_name = params.get('workspace_name')
 
+        max_c_uptake = params.get('max_c_uptake')
+
         #print('Making Media Objects')
         #file = open(self.scratch + "/output_1.txt", "w+")
         #print(file)
