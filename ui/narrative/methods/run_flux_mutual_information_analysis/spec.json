@@ -106,13 +106,14 @@
       },
       {
         "id": "max_c_uptake",
-        "optional": false,
-        "advanced": false,
+        "optional": true,
+        "advanced": true,
         "allow_multiple": false,
-        "default_values": "60",
+        "default_values": [""],
         "field_type": "text",
         "text_options": {
           "validate_as": "int",
+          "min_int":1,
           "max_int":60
         }
       }
