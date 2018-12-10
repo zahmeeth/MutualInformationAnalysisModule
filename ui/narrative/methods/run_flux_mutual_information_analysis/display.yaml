@@ -61,7 +61,7 @@ parameters :
 
     max_c_uptake :
         ui-name : |
-          Maximum carbon uptake
+          Max Carbon Uptake
         short-hint :  |
           The amount of maximum carbon flux utilized
         long-hint  :  |

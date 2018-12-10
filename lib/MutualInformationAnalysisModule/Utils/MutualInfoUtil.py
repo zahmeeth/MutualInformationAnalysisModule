@@ -171,6 +171,8 @@ class MutualInfoUtil:
 			})
 
 		#json.dump(output, open(self.scratch+'/fba.json', 'w'))
+		#print('$$$$$$$$$$')
+		#print(max_c_uptake)
 
 		fba = output['data'][0]['data']
 		biomass_data = "FBAs,Biomass\n"
