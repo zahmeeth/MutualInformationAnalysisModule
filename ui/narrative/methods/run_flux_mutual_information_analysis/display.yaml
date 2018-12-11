@@ -37,7 +37,7 @@ parameters :
 
     media_id :
         ui-name :
-          Base media
+          Absolute media
         short-hint : |
           Select a base media to which all selected compound combinations will be added
         long-hint  : |
