@@ -26,7 +26,7 @@ class MutualInformationAnalysisModule:
     ######################################### noqa
     VERSION = "1.0.0"
     GIT_URL = "https://github.com/zahmeeth/MutualInformationAnalysisModule.git"
-    GIT_COMMIT_HASH = "2c5e9033a8a243f2948cdefaa38a63fa90f93a8e"
+    GIT_COMMIT_HASH = "5a787c71f8a7f7987a2191fbb336f1617d659abc"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
