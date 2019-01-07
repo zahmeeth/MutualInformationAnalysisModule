@@ -88,7 +88,7 @@ class MutualInformationAnalysisModuleTest(unittest.TestCase):
         # self.assertEqual(ret[...], ...) or other unittest methods
 
         params = {'fbamodel_id': "iYL1228", 'compounds': 'cpd00001_c0,cpd00001_e0,cpd00002_c0,cpd00003_c0',
-                 'media_id': "MR1_Minimal_Media", 'workspace_name': 'zahmeeth:narrative_1496764271337','mi_options': 'secretion','max_c_uptake': '60'}
+                 'media_id': "MR1_Minimal_Media", 'workspace_name': 'zahmeeth:narrative_1496764271337','mi_options': 'secretion'}
 
         #params = {'fbamodel_id': "Pseudomonas_fluorescens_SBW25.RAST", 'compounds': 'cpd00001_c0,cpd00001_e0,cpd00002_c0,cpd00003_c0',
         #        'media_id': "Carbon-D-Glucose", 'workspace_name': 'zahmeeth:narrative_1537200416208','mi_options': 'flux'}
