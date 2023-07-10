@@ -37,7 +37,7 @@ parameters :
 
     media_id :
         ui-name :
-          Absolute media
+          Base media
         short-hint : |
           A base media to which examined compound combinations will be added
         long-hint  : |
@@ -61,9 +61,9 @@ parameters :
 
     mi_options :
         ui-name : |
-          Mode of operation
+          End of information channel
         short-hint :  |
-          The output perspective to which the information flow will be calculated
+          The output perspective at which the information flow will be calculated
         long-hint  :  |
           Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
 
