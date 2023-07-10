@@ -31,15 +31,15 @@ parameters :
         ui-name : |
             FBA model
         short-hint : |
-            Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
+            FBA Model
         long-hint  :  |
-            Provide the name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
+            The name for the Flux Balance Analysis Model on which the mutual information analysis will be performed
 
     media_id :
         ui-name :
           Absolute media
         short-hint : |
-          Select a base media to which all selected compound combinations will be added
+          A base media to which examined compound combinations will be added
         long-hint  : |
           Select a base media to which all selected compound combinations will be added
 
@@ -47,7 +47,7 @@ parameters :
         ui-name : |
           Compounds to analyze
         short-hint :  |
-          Select the list of compounds to compute mutual information analysis with model flux
+          Compounds on which information flow will be calculated
         long-hint  :  |
           Select the list of compounds to compute mutual information analysis with model flux
 
@@ -55,7 +55,7 @@ parameters :
         ui-name : |
           Max Carbon Uptake
         short-hint :  |
-          The amount of maximum carbon flux utilized
+          Maximum total consumption of carbon
         long-hint  :  |
           The amount of maximum carbon flux utilized
 
@@ -63,20 +63,24 @@ parameters :
         ui-name : |
           Mode of operation
         short-hint :  |
-          Select which model outputs to compute mutual information from intracellular flux values; biomass production; or section, uptake, and biomass production
+          The output perspective to which the information flow will be calculated
         long-hint  :  |
           Select which model outputs to compute mutual information from intecular flux values; biomass production; or section, uptake, and biomass production
 
 description : |
-    <p> Goal: This app generates a bar chart of an organism for various chemical compositions present in the environment that could potentially estimate the amount of information in bits flow through the metabolic network. </p>
-    <p> We demonstrate that this study can lead to a ranking of chemical compounds on the basis of how much mutual information through the through the metabolic network can result from their variation. </p>
-    <p> This can potentially lead to the reduction in the number of expensive experiments by reducing the different combinations of chemical compounds necessary to obtain and study determinate metabolic behaviors of these organisms, which might be associated with dysbiosis. </p>
-    <p> Begin by selecting the metabolic FBA model of an organism that you want to perform the Run Flux Mutual Information Analysis upon. Then specify the base media on which you will grow your organism. Finally, select the mode of operation such as mutual information from intracellular flux values; biomass production; or section, uptake, and biomass production
+    <p> The RFMIA app creates a bar chart of information flow through a metabolic model from various environmental perturbations. The various perturbations are decreasingly ranked based on their information flow. The score may be particularly valuable for predicting sensitivity of a metabolic system to given environmental perturbations, which may minimize expensive experiments. </p>
 
-    <p><strong> Team members who developed & deployed the mathematical models & deployed algorithms in KBase: </strong>
-    Zahmeeth Sakkaff, Massimilliano Pierobon and Chris Henry, For questions, <a href="http://kbase.us/contact-us/">contact us</a>.</p>
+    <p> The App includes a few succinct options of the user interface:</p>
+    <ol>
+      <li>the metabolic FBA model is selected from the models that are loaded in the Narrative environment.
+      <li>the base media that is common to all of the examined media conditions</li>
+      <li>media compounds to be examined are selected</li>
+      <li>the end of the metabolic channel for which the information flow is determined is selected by the user.</li>
+    </ol>
 
-    <p>Acknowledgments - We would like to thank the KBase team for their support in development, special thanks to: James Jeffryes, Tian Gu, Filipe Liu, Boris and Janaka Edirisinghe.</p>
+    <p><b>Team members</b>: Zahmeeth Sakkaff, Andrew Freiburger, Massimilliano Pierobon. and Chris Henry.</p>
+
+    <p>Acknowledgments - We would like to thank the KBase team for their support in development, special thanks to: James Jeffryes, Tian Gu, Filipe Liu, Mr. Boris, and Janaka Edirisinghe.</p>
 
 publications :
     -
