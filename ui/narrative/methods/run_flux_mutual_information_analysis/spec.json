@@ -87,23 +87,23 @@
          "field_type" : "dropdown",
          "dropdown_options" : {
             "options" : [
+                {
+                    "id" : "secretion",
+                    "value" : "secretion",
+                    "ui_name" : "Secretion and biomass growth",
+                    "display" : "Secretion and biomass growth"
+                },
+               {
+                  "value" : "biomass",
+                  "ui_name" : "Biomass growth",
+                  "display" : "Biomass growth",
+                  "id" : "biomass"
+               },
                {
                   "id" : "flux",
                   "display" : "Intracellular fluxes",
                   "ui_name" : "Intracellular fluxes",
                   "value" : "flux"
-               },
-               {
-                  "value" : "biomass",
-                  "ui_name" : "Biomass flux",
-                  "display" : "Biomass flux",
-                  "id" : "biomass"
-               },
-               {
-                  "id" : "secretion",
-                  "value" : "secretion",
-                  "ui_name" : "Uptake, biomass and secretion",
-                  "display" : "Uptake, biomass and secretion"
                }
             ]
          },
