@@ -1,4 +1,4 @@
-FROM kbase/kbase:sdkbase2.latest
+FROM kbase/sdkpython:3.8.0
 MAINTAINER KBase Developer
 # -----------------------------------------
 # In this section, you can install any system dependencies required
@@ -18,8 +18,7 @@ RUN pip install cffi --upgrade \
     && pip install pyopenssl --upgrade \
     && pip install ndg-httpsclient --upgrade \
     && pip install pyasn1 --upgrade \
-    && pip install requests --upgrade \
-    && pip install 'requests[security]' --upgrade
+    && pip install requests --upgrade 
 
 # -----------------------------------------
 RUN pip install natsort \
